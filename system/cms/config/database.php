@@ -51,12 +51,12 @@ $db[PYRO_DEVELOPMENT] = array(
 );
 
 // Staging
-/*
+
 $db[PYRO_STAGING] = array(
-	'hostname'		=> 	'',
-	'username'		=> 	'',
+	'hostname'		=> 	'localhost',
+	'username'		=> 	'root',
 	'password'		=> 	'',
-	'database'		=> 	'pyrocms',
+	'database'		=> 	'pyrocms_stage',
 	'dbdriver' 		=> 	'mysql',
 	'active_r' 		=>	TRUE,
 	'pconnect' 		=>	FALSE,
@@ -66,7 +66,7 @@ $db[PYRO_STAGING] = array(
 	'dbcollat' 		=>	'utf8_unicode_ci',
 	'port' 	 		=>	3306,
 );
-*/
+
 
 // Production
 $db[PYRO_PRODUCTION] = array(
