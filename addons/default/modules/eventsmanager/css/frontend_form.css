@@ -1,0 +1,77 @@
+fieldset > ul { padding-left: 0; }
+fieldset > ul li { list-style: none; margin-bottom: 15px; }
+a#map_options { cursor: pointer; }
+
+#ui-datepicker-div { display: none; }
+
+/* Picture & thumbnail */
+#col_1 > h2, #col_2 > h2
+{
+  font-size: 1.3em !important;
+}
+
+ul#folder-content
+{
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  /*max-height: 250px;*/
+  overflow: auto;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+}
+ul#folder-content li { display: inline-block; text-align: center; padding: 10px; }
+ul#folder-content li img { display: block; margin: 0 auto; max-height: 100px; max-width: 100px; cursor: pointer; }
+
+img#selected-picture
+{
+  max-height: 350px;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+div#col_2 div#preview-wrapper
+{
+  display: block;
+  margin: 0 auto;
+  background-color: #222; text-align: center; color: #fff;
+  width: 200px; padding: 10px;
+  box-shadow: 0 5px 10px #222;
+  border-radius: 3px;
+}
+
+div#col_2 div#preview
+{
+  display: block;
+  margin: 0 auto;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+  height: 100px;
+  width: 100px;
+}
+
+img#cropped-picture-preview
+{
+  max-width: none !important;
+  box-sizing: content-box !important;
+}
+
+#preview-coords > h3 { font-size: 1.1em !important; }
+#preview-coords label { display: inline-block; width: 200px; }
+#preview-coords input { width: 80px; }
+
+/* Map */
+div#map_canvas
+{
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #bbb;
+  margin: 0 auto;
+  background-color: #eee;
+}
+
+a#map-refresh { cursor: pointer; }
+
+

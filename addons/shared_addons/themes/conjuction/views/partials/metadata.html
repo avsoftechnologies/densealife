@@ -1,0 +1,40 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="author" content="PyroCMS Dev Team" />
+<meta name="copyright" content="PyroCMS LLC" />
+<meta name="distribution" content="global" />
+<meta name="resource-type" content="document" />
+<meta name="language" content="{{ lang:code }}" />
+
+{{ theme:favicon file="favicon.ico" sizes="16x16 32x32" }}
+
+<base href="{{ url:base }}" />
+
+<!-- Begin stylesheets -->
+{{ asset:css file="style.css" }}
+{{ asset:css file="jqueryui/themes/base/jquery.ui.all.css" }}
+
+<!-- End stylesheets -->
+
+<!-- Use Html5Shiv in order to allow IE render HTML5 -->
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+{{ asset:js file="jqueryui/jquery-1.9.1.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.core.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.widget.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.mouse.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.draggable.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.position.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.resizable.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.button.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.dialog.js" }}
+{{ asset:js file="jqueryui/ui/jquery.ui.tabs.js" }}
+<!--{{ asset:css file="jqueryui/demos.css"}}-->
+	
+
+<!-- Begin scripts -->
+{{ asset:render }}
+<!-- End scripts -->
+{{ template:metadata }}
+
+
+<title>{{ settings:site_name }}&nbsp;&bull;&nbsp;{{ template:title }}</title>

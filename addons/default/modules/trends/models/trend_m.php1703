@@ -1,0 +1,402 @@
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed') ;
+
+/**
+ * Trend model
+ * 
+ * @author		PyroCMS Dev Team
+ * @package		PyroCMS\Core\Modules\Trends\Models
+ */
+class Trend_m extends MY_Model
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('eventsmanager/eventsmanager_m');
+    }
+    
+    public function add_star($entry_id)
+    {
+        $this->query("UPDATE default_events SET star_count = star_count+1 WHERE id=$entry_id");
+    }
+    
+    public function remove_star($entry_id)
+    {
+        $this->query("UPDATE default_events SET star_count = star_count-1 WHERE id=$entry_id");
+    }
+    
+    public function add_follow($entry_id)
+    {
+        $this->query("UPDATE default_events SET follow_count = follow_count+1 WHERE id=$entry_id");
+    }
+    public function remove_follow($entry_id)
+    {
+        $this->query("UPDATE default_events SET follow_count = follow_count-1 WHERE id=$entry_id");
+    }
+    
+    public function add_favorite($entry_id)
+    {
+        $this->query("UPDATE default_events SET favorite_count = favorite_count+1 WHERE id=$entry_id");
+    }
+   
+    public function remove_favorite($entry_id)
+    {
+        $this->query("UPDATE default_events SET favorite_count = favorite_count-1 WHERE id=$entry_id");
+    }
+    
+    public function insert($input, $skip_validation = false)
+    {
+        $post = array(
+                    'user_id'      => $this->current_user->id,
+                    'trend'        => $input['trend'],
+                    'entry_type'   => $input['entry_type'],
+                    'module'       => $input['module'],
+                    'entry_id'     => $input['id'],
+                    'entry_title'  => $input['title'],
+                    'entry_key'    => $input['singular'],
+                    'entry_plural' => $input['plural'],
+                    'uri'          => !empty($input['uri']) ? $input['uri'] : null,
+                    'cp_uri'       => !empty($input['cp_uri']) ? $input['cp_uri'] : null,
+                    'ip_address'   => $this->input->ip_address(),
+                );
+        if(!$this->if_exists($input)){
+            switch($input['trend']){
+                case TREND_STAR:
+                    $post['star'] = true; 
+                    $this->add_star($input['id']);
+                    break;
+                case TREND_FOLLOW:
+                    $post['follow'] = true; 
+                    $this->add_follow($input['id']);
+                    break;
+                case TREND_FAVORITE:
+                    $post['favorite'] = true; 
+                    $this->add_favorite($input['id']);
+                    break;
+            }
+            return parent::insert($post) ;
+        }else{
+           
+           $query  = "UPDATE {$this->dbprefix('trends')} SET %s , modified_at='".date('Y-m-d H:i:s')."' WHERE user_id ={$this->current_user->id}"
+            . " AND entry_type = '{$input['entry_type']}' AND entry_id = {$input['id']}"; 
+            switch($input['trend']){
+                case TREND_STAR:
+                    $star = $this->select('star')
+                        ->get_by(array('user_id' => $this->current_user->id, 'entry_type' => $input['entry_type'], 'entry_id' => $input['id']));
+                    $existing = $star->star;
+                    if($existing=='true'){
+                        $this->remove_star($input['id']);
+                    }else{
+                        $this->add_star($input['id']);
+                    }
+                    $condition  = 'star = (if(star="true","false","true")) ';
+                    break;
+                case TREND_FOLLOW:
+                    $follow = $this->select('follow')
+                        ->get_by(array('user_id' => $this->current_user->id, 'entry_type' => $input['entry_type'], 'entry_id' => $input['id']));
+                    $existing = $follow->follow;
+                    if($existing=='true'){
+                        $this->remove_follow($input['id']);
+                    }else{
+                        $this->add_follow($input['id']);
+                    }
+                    $condition  = 'follow = (if(follow="true","false","true")) ';
+                    break;
+                case TREND_FAVORITE:
+                    $favorite = $this->select('favorite')
+                        ->get_by(array('user_id' => $this->current_user->id, 'entry_type' => $input['entry_type'], 'entry_id' => $input['id']));
+                    $existing = $favorite->favorite;
+                    if($existing=='true'){
+                        $this->remove_favorite($input['id']);
+                    }else{
+                        $this->add_favorite($input['id']);
+                    }
+                    $condition  = 'favorite = (if(favorite="true","false","true")) '; 
+                    break;
+            }
+            $this->query(sprintf($query,$condition));
+            
+        }
+        
+    }
+    
+    public function if_exists($input){
+        return $this->count_by(array('user_id' => ci()->current_user->id, 'entry_type' => $input['entry_type'], 'entry_id' => $input['id'])) ? true : false;
+    }
+    
+    public function toogle_state(){
+        
+    }
+    
+    public function count_star($entry_type = 'event', $entry_id = null, $user_id = null)
+    {
+        return $this->count_by(array('entry_type' => $entry_type, 'entry_id' => $entry_id,  'star' => 'true')); 
+    }
+    
+    public function count_trend($trend, $entry_type = null, $user_id = null)
+    {
+        if($trend == TREND_FOLLOW){
+            $select  = 'follow';
+        }elseif($trend == TREND_FAVORITE){
+            $select = 'favorite';
+        }elseif($trend == TREND_STAR){
+            $select = 'star';
+        }
+        $this->count_by();
+    }
+    
+    public function get_my_trend($trend, $user, $entry_type, $entry_id){
+        $select = '*';
+        if($trend == TREND_FOLLOW){
+            $select  = 'follow';
+        }elseif($trend == TREND_FAVORITE){
+            $select = 'favorite';
+        }elseif($trend == TREND_STAR){
+            $select = 'star';
+        }
+        $array = array('entry_type' => $entry_type, 'user_id' => $user, 'entry_id' => $entry_id);
+        return $this->select($select)->get_by($array);
+    }
+    
+    
+    public function get_trending($user_id = null, $limit = null)
+    { 
+        $this->db
+                ->order_by('star_count','DESC')
+                ->order_by('follow_count','DESC')
+                ->order_by('favorite_count','DESC');
+        $this->db->join('trends as t', 'events.id = t.entry_id', 'left');
+        if($user_id!=''){
+            $this->db->where('t.user_id', $user_id);
+        }
+        if(!is_null($limit))
+        {
+            $this->db->limit($limit);
+        }
+        $this->db->group_by('events.id');
+        $rs = $this->db->get('events')->result();
+        return $rs; 
+    }
+    
+    
+    public function get_favorites($user_id=null, $limit = null, $entry_type = 'event')
+    {
+        $sql = "
+                        SELECT E.*   
+                        FROM {$this->db->dbprefix('events')} AS E
+                        WHERE E.id IN (
+                                             SELECT entry_id 
+                                             FROM {$this->db->dbprefix('trends')} AS T2
+                                             
+                                             WHERE T2.favorite = 'true'";
+        if($user_id!=''){
+            $sql.=" AND T2.user_id = {$user_id}";
+        }
+        $sql.=" AND T2.entry_type='event')";
+        if(!is_null($limit))
+        {
+            $sql.=" LIMIT {$limit}";
+        }
+        $q = $this->query($sql);
+                        
+        $result  = $q->result(); 
+        return $result;
+    }
+    
+    
+    /**
+     * Get recent comments
+     *
+     * 
+     * @param int $limit The amount of comments to get
+     * @param int $is_active set default to only return active comments
+     * @return array
+     */
+    public function get_recent($limit = 10, $is_active = 1)
+    {
+        $this->_get_all_setup() ;
+
+        $this->db
+                ->where('c.is_active', $is_active)
+                ->order_by('c.created_on', 'desc') ;
+
+        if ( $limit > 0 ) {
+            $this->db->limit($limit) ;
+        }
+
+        return $this->get_all() ;
+    }
+
+    /**
+     * Get something based on a module item
+     *
+     * @param string $module The name of the module
+     * @param int $entry_key The singular key of the entry (E.g: blog:post or pages:page)
+     * @param int $entry_id The ID of the entry
+     * @param bool $is_active Is the comment active?
+     * @return array
+     */
+    public function get_by_entry($module, $entry_key, $entry_id, $is_active = true, $parent_id = 0, $comment_id = 0)
+    {
+        $this->_get_all_setup() ;
+
+        $this->db
+                ->where('c.module', $module)
+                ->where('c.entry_id', $entry_id)
+                ->where('c.entry_key', $entry_key)
+                ->where('c.is_active', $is_active)
+                ->where('c.parent_id', $parent_id) ;
+        if ( $comment_id != 0 ) {
+            $this->db->where('c.id', $comment_id) ;
+        }
+        if ( $parent_id == 0 ) {
+            $this->db->order_by('c.created_on', Settings::get('comment_order')) ;
+        }
+
+        return $this->get_all() ;
+    }
+
+    public function get_latest_entry($module, $entry_key, $entry_id, $is_active = true, $parent_id = 0)
+    {
+        $this->_get_all_setup() ;
+
+        $this->db
+                ->where('c.module', $module)
+                ->where('c.entry_id', $entry_id)
+                ->where('c.entry_key', $entry_key)
+                ->where('c.is_active', $is_active)
+                ->where('c.parent_id', $parent_id) ;
+        if ( $parent_id == 0 ) {
+            $this->db->order_by('c.created_on', Settings::get('comment_order')) ;
+        }
+
+        return $this->get_all() ;
+    }
+
+
+    /**
+     * Update an existing comment
+     *
+     * @param int $id The ID of the comment to update
+     * @param array $input The array containing the data to update
+     * @return void
+     */
+    public function update($id, $input, $skip_validation = false)
+    {
+        return parent::update($id, array(
+                    'user_name'    => isset($input['user_name']) ? ucwords(strtolower(strip_tags($input['user_name']))) : '',
+                    'user_email'   => isset($input['user_email']) ? strtolower($input['user_email']) : '',
+                    'user_website' => isset($input['user_website']) ? prep_url(strip_tags($input['user_website'])) : '',
+                    'comment'      => htmlspecialchars($input['comment'], null, false),
+                    'parsed'       => parse_markdown(htmlspecialchars($input['comment'], null, false)),
+        )) ;
+    }
+
+    /**
+     * Approve a comment
+     *
+     * @param int $id The ID of the comment to approve
+     * @return mixed
+     */
+    public function approve($id)
+    {
+        return parent::update($id, array( 'is_active' => true )) ;
+    }
+
+    /**
+     * Unapprove a comment
+     *
+     * @param int $id The ID of the comment to unapprove
+     * @return mixed
+     */
+    public function unapprove($id)
+    {
+        return parent::update($id, array( 'is_active' => false )) ;
+    }
+
+    public function get_slugs()
+    {
+        $this->db
+                ->select('comments.module, modules.name')
+                ->distinct()
+                ->join('modules', 'comments.module = modules.slug', 'left') ;
+
+        $slugs = parent::get_all() ;
+
+        $options = array() ;
+
+        if ( !empty($slugs) ) {
+            foreach ( $slugs as $slug ) {
+                if ( !$slug->name and ($pos = strpos($slug->module, '-')) !== false ) {
+                    $slug->ori_module = $slug->module ;
+                    $slug->module     = substr($slug->module, 0, $pos) ;
+                }
+
+                if ( !$slug->name and $module = $this->module_m->get_by('slug', plural($slug->module)) ) {
+                    $slug->name = $module->name ;
+                }
+
+                //get the module name
+                if ( $slug->name and $module_names = unserialize($slug->name) ) {
+                    if ( array_key_exists(CURRENT_LANGUAGE, $module_names) ) {
+                        $slug->name = $module_names[CURRENT_LANGUAGE] ;
+                    } else {
+                        $slug->name = $module_names['en'] ;
+                    }
+
+                    if ( isset($slug->ori_module) ) {
+                        $options[$slug->ori_module] = $slug->name . " ($slug->ori_module)" ;
+                    } else {
+                        $options[$slug->module] = $slug->name ;
+                    }
+                } else {
+                    if ( isset($slug->ori_module) ) {
+                        $options[$slug->ori_module] = $slug->ori_module ;
+                    } else {
+                        $options[$slug->module] = $slug->module ;
+                    }
+                }
+            }
+        }
+
+        asort($options) ;
+
+        return $options ;
+    }
+
+    /**
+     * Get something based on a module item
+     *
+     * @param string $module The name of the module
+     * @param int $entry_key The singular key of the entry (E.g: blog:post or pages:page)
+     * @param int $entry_id The ID of the entry
+     * @return bool
+     */
+    public function delete_by_entry($module, $entry_key, $entry_id)
+    {
+        return $this->db
+                        ->where('module', $module)
+                        ->where('entry_id', $entry_id)
+                        ->where('entry_key', $entry_key)
+                        ->delete('comments') ;
+    }
+
+    /**
+     * Setting up the query for the get* functions
+     */
+    private function _get_all_setup()
+    {
+        $this->_table = null ;
+        $this->db
+                ->select('c.*')
+                ->from('comments c')
+                ->select('IF(c.user_id > 0, m.display_name, c.user_name) as user_name', false)
+                ->select('IF(c.user_id > 0, u.email, c.user_email) as user_email', false)
+                ->select('u.username, m.display_name')
+                ->join('users u', 'c.user_id = u.id', 'left')
+                ->join('profiles m', 'm.user_id = u.id', 'left') ;
+    }
+
+}

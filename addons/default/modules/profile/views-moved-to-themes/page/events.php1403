@@ -1,0 +1,59 @@
+
+<div class="comman-heading">All Events<button class="right events-btn margin-zero btn-color">+ Create Event</button></div>
+<div class="clearfix margin"><a href="#">Festivals</a> | <a href="#">Concert</a> | <a href="#">Tours</a> | <a href="#">Club Events</a> | <a href="#">More</a> 
+    <div class="right events-btn" style="margin-right: -7px;">
+        <select>
+            <option>Festivals</option>
+            <option>Concert</option>
+            <option>Tours</option>
+            <option>Club Events</option>
+            <option>Trending</option>
+            <option>Upcoming</option>
+        </select>
+    </div>
+</div>
+<ul class="stream">
+    <h2 class="heading">Trending</h2>
+    {{ eventsmanager:trending limit="3"}}
+    <li>
+        <h2><a href="{{ url:site uri='eventsmanager/about/{{slug}}' }}" title="{{ title }}" >{{ title }}</a></h2>
+        <a href="{{ url:site uri='eventsmanager/about/{{slug}}' }}" title="{{ title }}" >
+        <span class="image">
+            {{ eventsmanager:thumb name="{{ thumbnail }}" }}
+            <div class="display-none hover-aera"><a href="" class="float-left star-aera">Star</a>  <button type="button" class="float-right">follow</button></div>
+        </span> 
+        </a>
+        <div><a href="" class="float-right">{{ follow_count }} Followers</a></div>
+        <span class="block new-star"><a href="" class="stars comman-star">{{ star_count }} Stars</a></span>  
+    </li>
+    {{ /eventsmanager:trending }}
+    <h2 class="heading">Favorites</h2>
+    {{ eventsmanager:favorite limit="3"}}
+    <li>
+        <h2><a href="{{ url:site uri='eventsmanager/about/{{slug}}' }}" title="{{ title }}" >{{ title }}</a></h2>
+        <a href="{{ url:site uri='eventsmanager/about/{{slug}}' }}" title="{{ title }}" >
+        <span class="image">
+            {{ eventsmanager:thumb name="{{ thumbnail }}" }}
+            <div class="display-none hover-aera"><a href="" class="float-left star-aera">Star</a>  <button type="button" class="float-right">follow</button></div>
+        </span> 
+        </a>
+        <div><a href="" class="float-right">{{ follow_count }} Followers</a></div>
+        <span class="block new-star"><a href="" class="stars comman-star">{{ star_count }} Stars</a></span>  
+    </li>
+    {{ /eventsmanager:favorite }}
+
+    <h2 class="heading">Upcoming</h2>
+    {{ eventsmanager:upcoming limit="3"}}
+    <li>
+        <h2><a href="{{ url:site uri='eventsmanager/about/{{slug}}' }}" title="{{ title }}" >{{ title }}</a></h2>
+        <a href="{{ url:site uri='eventsmanager/about/{{slug}}' }}" title="{{ title }}" >
+        <span class="image">
+            {{ eventsmanager:thumb name="{{ thumbnail }}" }}
+            <div class="display-none hover-aera"><a href="" class="float-left star-aera">Star</a>  <button type="button" class="float-right">follow</button></div>
+        </span> 
+        </a>
+        <div><a href="" class="float-right">{{ follow_count }} Followers</a></div>
+        <span class="block new-star"><a href="" class="stars comman-star">{{ star_count }} Stars</a></span>  
+    </li>
+    {{ /eventsmanager:upcoming }}
+</ul>

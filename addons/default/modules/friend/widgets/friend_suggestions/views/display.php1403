@@ -1,0 +1,43 @@
+<?php if ( !empty($suggestions) ) { ?>
+    <span class="heading">Friends Suggestions</span>
+    <ul>
+        <?php foreach ( $suggestions as $user ): ?>
+            <li class="li_<?php echo $user->user_id; ?>">
+                <span><img src="" />
+                <span class="name"><?php echo $user->name; ?></span> 
+                <span class="name">
+                    <a href="javascript:void(0);" data-user="<?php echo $user->user_id; ?>" data-status="<?php echo $user->status; ?>" class="add_frnd link_<?php echo $user->user_id; ?>" title="<?php echo $user->status_label; ?>" ><?php echo $user->status_label; ?></a>
+                    | 
+                    <a href="">6 mutual friends</a>
+                </span> 
+                </span> 
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <hr />
+    <span class="more">See more suggestion</span> 
+<?php } ?>
+<script>
+    $(document).ready(function() {
+        $('.add_frnd').click(function() {
+            var user = $(this).data('user');
+            if($(this).text()=='Invite Friend'){
+                $.post('../friend/invite_friend', {user: user}, function(response) {
+                    if (response.status === 'success') {
+                        $('.link_' + user).text('Request Sent');
+                    }
+
+                    }, 'json');
+            }
+            
+            if($(this).text()=='Respond to request'){
+                $.post('../friend/respond_friend', {user: user}, function(response) {
+                    if (response.status === 'success') {
+                        $('.link_' + user).text('Friends');
+                    }
+                    }, 'json');
+            }
+
+        });
+    })
+</script>

@@ -1,0 +1,25 @@
+<title>{{ template:title }} | {{ settings:site_name }}</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<base href="{{ url:base }}"/>
+
+{{ theme:favicon file="favicons/favicon.ico"}}
+{{ theme:favicon file="favicons/apple-touch-icon.png" rel="apple-touch-icon" }}
+{{ theme:favicon file="favicons/apple-touch-icon-precomposed.png" rel="apple-touch-icon" }}
+{{ theme:favicon file="favicons/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon" }}
+{{ theme:favicon file="favicons/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon" }}
+{{ theme:favicon file="favicons/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon" }}
+
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+{{ theme:css file="bootstrap.css" }}
+{{ theme:css file="bootstrap-responsive.css" }}
+{{ theme:css file="bootswatch.css" }}
+
+{{ theme:js file="jquery.1.7.2.js" }}
+
+{{ template:metadata }}

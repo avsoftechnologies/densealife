@@ -1,0 +1,6 @@
+<span class="heading-comman">Friends</span><a href="#">({{user:friend_count user_id=user_id}})</a>
+<ul class="modify-block clearfix">
+{{ user:friends user_id=user_id}}
+    <li><span>{{url:anchor segments="/user/{{username}}" title=first_name}}</span>{{user:profile_pic user_id=user_id w='95' h='95'}}</li>
+{{ /user:friends }}
+</ul>

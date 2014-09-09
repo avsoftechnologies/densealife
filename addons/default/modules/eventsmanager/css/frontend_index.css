@@ -1,0 +1,20 @@
+/* Events list */
+
+table.event-container { border-collapse: collapse; margin: 0; width: 100%; }
+table.event-container:hover { background: #eef; }
+table.event-container tr td.event-picture { width: 80px; height: 80px; text-align: right; }
+table.event-container tr td.event-picture img { max-height: 80px; max-width: 80px; }
+table.event-container tr td.event-content { vertical-align: top; padding: 7px 15px 0 15px; }
+table.event-container tr td.event-content img { display: inline-block; padding: 0; margin: 0; }
+table.event-container tr td.event-content a { display: inline-block; padding: 0 0 5px 0; margin: 0; }
+h4.period
+{
+	background-color: #ddf;
+	margin: 0; padding: 3px 0 3px 95px;
+	font-size: 1.1em;
+	border-top: 1px solid;
+	color: #555;
+}
+h4.period#current { background-color: #9e8; }
+
+h2 > small { font-size: 0.70em; }

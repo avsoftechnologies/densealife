@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+    <head>
+        {{ theme:partial name='metadata' }}
+    </head>
+
+    <body>
+        {{ integration:analytics }}
+        <div id="fb-root"></div>
+        <script>
+            var FB_APP_ID = "{{ settings:login_fb_appid }}";
+            var FB_SCOPE = "{{ settings:login_fb_scope }}";
+            var FB_REDIRECT_URI = "{{ settings:login_fb_redirecturl }}";
+
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: FB_APP_ID, // App ID
+                    status: true,
+                    cookie: true,
+                    xfbml: true,
+                });
+
+            };
+
+
+            (function(d) {
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement('script');
+                js.id = id;
+                js.async = true;
+                js.src = "//connect.facebook.net/en_EN/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document));
+
+        </script>
+
+        <div id="wepper"> 
+            <!--Start Header-->
+            {{ theme:partial name="header" }}
+            <!--End Header--> 
+            <!--Start Body Container-->
+            <div id="body-container" class="clearfix"> 
+
+                <!--Start left-body-container-->
+                <!--{{theme:partial name="left"}}-->
+                <div class="left-body-container">
+                    {{ theme:partial name="content" }}
+                </div>
+                <!--End left-body-container--> 
+                <!--Start right-body-container-->
+                <div class="right-body-container">
+                    {{theme:partial name="right"}}
+                </div>
+                <!--End Right-body-container--> 
+            </div>
+            <!--End Body Container-->
+            <footer> 
+                {{ theme:partial name="footer" }}    
+            </footer>
+        </div>
+    </body>
+</html>

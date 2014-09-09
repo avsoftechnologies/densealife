@@ -1,0 +1,1 @@
+ALTER TABLE `default_notifications` CHANGE `type` `type` ENUM( 'friend', 'message', 'follow', 'like_photo', 'like_status', 'invite', 'share' ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ;

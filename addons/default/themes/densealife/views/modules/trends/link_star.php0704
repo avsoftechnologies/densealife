@@ -1,0 +1,5 @@
+<?php echo form_open("trends/create",'class="form-trend d-none"'); ?>
+<noscript><?php echo form_input('d0ntf1llth1s1n', '', 'style="display:none"'); ?></noscript>
+<?php echo form_hidden('entry', $entry_hash); ?>
+<?php echo form_close();?>
+ <a href="#" class="star-count"><?php echo $star_count;?></a>Stars <a href="javascript:void(0);" class='ctrl_trend star'><?php echo $text;?></a>

@@ -1,0 +1,1 @@
+<a href="#"><?php echo $count; ?></a><?php echo $count > 1 ? 'Stars' : 'Star';?> 

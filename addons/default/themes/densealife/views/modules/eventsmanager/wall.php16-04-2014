@@ -1,0 +1,9 @@
+<div class="comman-heading">Join the Conversation</div>
+<ul class="status">
+    <li><span>{{ theme:image file="status.png" alt="Status" }}</span>Update Status</li>
+    <li><span>{{ theme:image file="addvidoes.png" alt="Vidoes" }}</span>Add Photos/Video</li>
+</ul>
+<div class="status-box">
+    <?php echo $this->comments->form(); ?>
+</div>
+<?php echo $this->comments->display (); ?>

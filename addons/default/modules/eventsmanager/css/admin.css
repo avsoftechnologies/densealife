@@ -1,0 +1,116 @@
+/* Events list */
+
+table { border-collapse: collapse; }
+th.checkbox, td.checkbox { width: 20px; }
+th.buttons, td.buttons { width: 200px; }
+th.event-date, td.event-date { width: 100px; }
+th.event-picture, td.event-picture { text-align: right; width: 80px; }
+th.event-picture, td.event-picture img { max-width: 80px; max-height: 80px; }
+td.event-content { vertical-align: top; }
+td.event-content h6 { margin: 0 0 10px 0; }
+
+div.blank-slate {
+	text-align: center;
+}
+
+.form_inputs > fieldset > ul > li > label { display: block; padding: 0 0 10px 0; }
+
+/* Create/manage function : content tab */
+
+input[name="title"], input[name="place"], input[name="place_clone"] { width: 300px; }
+a#map_options { cursor: pointer; }
+.chzn-container { vertical-align: middle; }
+li.date-meta .chzn-container { width: 70px !important; }
+li.date-meta .chzn-container .chzn-drop { width: 68px !important; }
+li.date-meta .chzn-container .chzn-drop .chzn-search > input { width: 34px !important; }
+b.time_separator { font-size: 1.5em; }
+
+/* Create/manage function : picture tab */
+
+div#picture-tab, div#cover-photo { width: 100%; }
+div#picture-tab h4, div#cover-photo h4 { margin-top: 0; font-family: sans-serif; }
+
+div#col_1 ,div#col_1_cp{ float: left; width: 44%; }
+div#col_2 , div#col_2_cp { float: right; width: 55%; }
+
+div#col_1 ul#folder-content li , div#col_1_cp ul#cp-folder-content li { display: inline-block; text-align: center; padding: 10px; }
+div#col_1 ul#folder-content li img, div#col_1_cp ul#cp-folder-content li img { display: block; margin: 0 auto; max-height: 100px; max-width: 100px; cursor: pointer; }
+div#col_1 div#message, div#col_1_cp div#cp_message { text-align: center; }
+
+div#col_2 div#cropping, div#col_2_cp div#cp-cropping { padding: 20px 0; background: #bbf; border-radius: 5px; }
+
+div#col_2 div#raw-wrapper, div#col_2_cp div#cp-raw-wrapper
+{
+	width: 100%; height: 350px;
+	background: #222; text-align: center;
+	box-shadow: 0 5px 10px #222;
+}
+
+div#col_2 div#raw-wrapper img#selected-picture , div#col_2_cp div#cp-raw-wrapper img#cp-selected-picture { max-height: 350px; max-width: 100%; }
+
+div#col_2 div#preview-wrapper, div#col_2_cp div#cp-preview-wrapper
+{
+	background-color: #222; text-align: center; color: #fff;
+	width: 100px; padding: 10px;
+	box-shadow: 0 5px 10px #222;
+	display: inline-block; margin-left: 25px; border-radius: 3px;
+}
+
+div#col_2 div#preview, div#col_2_cp div#cp-preview
+{
+	position: relative;
+	overflow: hidden;
+	height: 100px;
+	width: 100px;
+}
+
+div#col_2 div#preview-coords, div#col_2_cp div#cp-preview-coords
+{
+	width: 400px;
+	max-width: 100%;
+	display: inline-block;
+	margin-left: 25px; 
+	vertical-align: top;
+}
+div#col_2 div#preview-coords h3, div#col_2_cp div#cp-preview-coords h3 { margin: 15px 0 10px 0; }
+div#col_2 div#preview-coords label, div#col_2_cp div#cp-preview-coords label { display: inline-block; width: 150px; }
+div#col_2 div#preview-coords input, div#col_2_cp div#cp-preview-coords input { width: 60px; }
+
+
+/* Create/manage function : map tab */
+div#map_canvas
+{
+	width: 100%;
+	max-width: 100%;
+	border: 1px solid #bbb;
+	margin: 0 auto;
+	background-color: #eee;
+}
+a#map-refresh { cursor: pointer; }
+
+/* Buttons */
+.apple
+{
+	background-color: #36A800;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#52CF17), to(#36A800));
+	background-image: -moz-linear-gradient(#52CF17, #36A800);
+	background-image: -ms-linear-gradient(#52CF17, #36A800);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #52CF17), color-stop(100%, #36A800));
+	background-image: -webkit-linear-gradient(#52CF17, #36A800);
+	background-image: -o-linear-gradient(#52CF17, #36A800);
+	background-image: linear-gradient(#52CF17, #36A800);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	border: 1px solid #36A800;
+	color: #fff!important;
+}
+.apple:hover
+{
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#36A800), to(#52CF17));
+	background-image: -moz-linear-gradient(#36A800, #52CF17);
+	background-image: -ms-linear-gradient(#36A800, #52CF17);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #36A800), color-stop(100%, #52CF17));
+	background-image: -webkit-linear-gradient(#36A800, #52CF17);
+	background-image: -o-linear-gradient(#36A800, #52CF17);
+	background-image: linear-gradient(#36A800, #52CF17);
+}

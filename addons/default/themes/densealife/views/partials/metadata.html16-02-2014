@@ -1,0 +1,30 @@
+{{ theme:favicon file="favicon.ico" sizes="16x16 32x32" }}
+<!-- Begin stylesheets -->
+{{ asset:css file="skins/tango/skin.css" }}
+
+{{ asset:css file="style.css" }}
+{{ asset:css file="style-modified.css" }}
+{{ asset:css file="common.css" }}
+{{ asset:css file="jquery-ui.css" }}
+<!-- End stylesheets -->
+<!-- Use Html5Shiv in order to allow IE render HTML5 -->
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+{{ asset:js file="jquery-1.9.1.js" }}
+{{ asset:js file="jquery-ui.js" }}
+{{ asset:js file="jquery.jcarousel.js" }}
+{{ asset:js file="jquery.form.js" }}
+{{ asset:js file="expanding.js" }}
+<!--{{ asset:js file="lightbox.js" }}-->
+<!-- Begin scripts -->
+{{ asset:render }}
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery('#mycarousel').jcarousel();
+});
+</script>
+<!-- End scripts -->
+{{ template:metadata }}
+
+
+<title>{{ settings:site_name }}&nbsp;&bull;&nbsp;{{ template:title }}</title>

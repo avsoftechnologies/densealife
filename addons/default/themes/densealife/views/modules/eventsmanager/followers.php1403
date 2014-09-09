@@ -1,0 +1,18 @@
+<div class="comman-heading">Followers</div>
+<ul class="followers">
+    {{ trends:followers entry_id="<?php echo $event->id ; ?>"}}
+    <li>
+        <div class="fl">
+            <span><img src="" /></span> 
+            <span class="name">{{display_name}}</span> 
+            <br/>
+            <span class="name fl">Location: {{address_line1}}<br/> {{address_line2}}<br/>{{address_line3}}</span> 
+        </div>
+        {{ if user_id != <?php echo ci()->current_user->id ;?> }}
+        <div>
+            <button class="common right disabled">Add Friend</button>    
+        </div>
+        {{endif}}
+    </li>
+    {{ /trends:followers }}
+</ul>

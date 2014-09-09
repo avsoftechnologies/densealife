@@ -1,0 +1,63 @@
+<div class="comman-heading">Followers</div>
+<ul class="followers">
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+    <li>
+        <span><img src="" /></span> 
+        <button class="common right">Add Favorite</button>
+        <span class="name">Event Name Here</span> 
+        <span class="name">Location: xyz</span> 
+    </li>
+</ul>

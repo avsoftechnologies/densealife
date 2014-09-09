@@ -1,0 +1,49 @@
+   <div class="navbar-inner">
+     <div class="container">
+       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </a>
+       <a class="brand" href="{{ url:site }}">{{ settings:site_name }}</a>
+       <div class="nav-collapse" id="main-menu">
+        <ul class="nav" id="main-menu-left">
+          {{ navigation:links group="header" }}
+        </ul>
+        <ul class="nav pull-right" id="main-menu-right">
+          {{ if user:not_logged_in }}<li><a href="{{ url:site }}register">{{ helper:lang line="user_register_btn" }}</a></li>{{ endif }}
+          <li class="dropdown" id="preview-menu">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ if user:logged_in }}Your panel {{ else }}Login {{ endif }}<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li>
+                {{ if user:logged_in }}
+                {{ if settings:enable_profiles }}
+                  <a href="{{ url:site uri='my-profile' }}">{{ helper:gravatar email=user:email size="16" }} {{ user:display_name }}</a>
+                {{ else }}
+                  {{ helper:gravatar email=user:email size="20" }} {{ user:display_name }}
+                {{ endif }}
+                {{ if settings:enable_profiles }}
+                  <a href="{{ url:site uri='edit-profile' }}">{{ helper:lang line="edit_profile_label" }}</a>
+                {{ endif }}
+                {{ if user:has_cp_permissions }}
+                  <a href="{{ url:site uri='admin' }}" target="_blank">{{ helper:lang line="global:control-panel" }}</a>
+                {{ endif }}
+                <a href="{{ url:site uri='users/logout' }}">{{ helper:lang line="logout_label" }}</a>
+              {{ else }}
+                <form action="{{ url:site uri='users/login' }}" method="post" accept-charset="utf-8" id="login-small" class="search">
+                  <input type="hidden" style="margin-bottom: 15px;" name="redirect_to" value="{{ url:current }}" />
+                  <input type="text" id="email" style="margin-bottom: 15px; width:176px; margin-left:10px;" name="email" maxlength="120" placeholder="{{ helper:lang line="user_email" }}" />
+                  <input type="password" id="password" name="password" maxlength="20" placeholder="{{ helper:lang line="user_password" }}" style="margin-bottom: 15px; width:176px !important; margin-left:10px;" />
+                  <input type="checkbox" style="float: left; margin-right: 10px;"  id="remember-checksidebar" name="remember" value="1"  />
+                  <label class="string optional" for="user_remember_me">{{ helper:lang line="user_remember" }}</label>
+                  <input type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" value="{{ helper:lang line='user_login_btn' }}" name="btnLogin" />
+                  <button class="btn" style="clear: left; width: 100%; height: 32px; font-size: 13px;"><?php echo anchor('users/reset_pass', lang('user_reset_password_link'));?></button>
+                </form>
+              {{ endif }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+       </div>
+     </div>
+   </div>

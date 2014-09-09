@@ -1,0 +1,1 @@
+<span>&copy;2008 - {{ helper:date format="Y" }} by {{ settings:site_name }}.  All Right Reserved. &nbsp;&bull;&nbsp;  </span> <span class="bottom-links">Events | Photo | Videos | News | Contact Us | Sitemap | Private Policy</span> 

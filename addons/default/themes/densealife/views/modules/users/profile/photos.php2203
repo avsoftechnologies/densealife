@@ -1,0 +1,30 @@
+{{theme:partial name='blocks/common'}}
+<div class="comman-box clearfix">
+    <div class="comman-heading">Photos</div>
+    {{ user:profile_fields user_id= _user:id }}
+    {{if user:id==_user:id}}
+    <ul class="search-box clearfix">
+        <li class="right"><button id="add-album">Add Album</button></li>
+        <li class="right"><button id="add-photo-video" class="btn-color">Add Photo/ Video</button></li>
+    </ul>
+    {{endif}}
+    {{user:profile}}
+    <div id="container-album-create-form" class="d-none">&nbsp;</div>
+    <div class="clear"></div>
+    <hr/>
+    <div class="clear"></div>
+    <ul class="videos">
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+        <li><img src="" /><span class="name">Album 1 (32 Photos)</span></li>
+    </ul>
+</div>

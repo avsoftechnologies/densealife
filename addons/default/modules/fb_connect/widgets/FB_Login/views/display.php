@@ -1,0 +1,45 @@
+<?php if ( !empty($suggestions) ) { ?>
+    <span class="heading">Friends Suggestions</span>
+    <ul>
+        <?php foreach ( $suggestions as $suggestion ): ?>
+            <li class="li_<?php echo $suggestion->user_id; ?>">
+                <span>{{user:profile_pic user_id='<?php echo $suggestion->user_id;?>'}}
+                    <span class="name"><a href='/densealife-page/<?php echo $suggestion->username; ?>'><?php echo $suggestion->name; ?></a></span> 
+                <span class="name">
+                    <a href="javascript:void(0);" data-user="<?php echo $suggestion->user_id; ?>" data-status="<?php echo $suggestion->status; ?>" class="add_frnd link_<?php echo $suggestion->user_id; ?>" title="<?php echo $suggestion->status_label; ?>" ><?php echo $suggestion->status_label; ?></a>
+                    <?php if($suggestion->count_mutual_friends):?>
+                    | 
+                    <a href=""><?php echo $suggestion->count_mutual_friends;?> mutual friends</a>
+                    <?php endif ;?>
+                </span> 
+                </span> 
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <hr />
+    <span class="more">See more suggestion</span> 
+<?php } ?>
+<script>
+    $(document).ready(function() {
+        $('.add_frnd').click(function() {
+            var user = $(this).data('user');
+            if($(this).text()=='Invite Friend'){
+                $.post('/friend/invite_friend', {user: user}, function(response) {
+                    if (response.status === 'success') {
+                        $('.link_' + user).text('Request Sent');
+                    }
+
+                    }, 'json');
+            }
+            
+            if($(this).text()=='Respond to request'){
+                $.post('/friend/respond_friend', {user: user}, function(response) {
+                    if (response.status === 'success') {
+                        $('.link_' + user).text('Friends');
+                    }
+                    }, 'json');
+            }
+
+        });
+    })
+</script>

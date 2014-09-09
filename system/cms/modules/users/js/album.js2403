@@ -1,0 +1,34 @@
+$(document).ready(function() {
+$('body').on('click','#add-album',function() {
+        $('#container-album-create-form').load('/album/create', function() {
+            $(this).slideDown('slow');
+        });
+    });
+});
+
+$('#form-add-album').ajaxForm({
+    type: 'POST',
+    delegation: true, // for live response
+    dataType: 'json',
+    beforeSubmit: function() {
+        $.fancybox.showLoading();
+    },
+    success: function(response) {
+        if(response.status){
+            $('#container-album-create-form').html(response.message).delay(5000).slideUp('slow');
+        }else{
+            $('.error-msg').remove();
+            $('#container-album-create-form').before(response.message);
+        }
+        
+    },
+    error: function(response){
+        $('#container-album-create-form').before(response.message);
+    },
+    complete: function() {
+        $.fancybox.hideLoading();
+    }, 
+    
+});
+
+

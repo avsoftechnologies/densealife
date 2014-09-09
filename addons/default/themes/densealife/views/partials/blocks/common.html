@@ -1,0 +1,16 @@
+
+<div class="comman-box">
+    <ul class="videos clearfix">
+       {{albums:data:folder}}
+            <li>
+                <a href="/album/images/{{id}}" class="fancybox fancybox.ajax">
+                <img src="{{files:image file=folder_image dim="145"}}"/>
+                <span class="txt-center name wid-135 ellipsis" title="{{name}}"> 
+                    {{name}} 
+                </span>
+                <span class="name txt-center" style="margin-top:-11px !important">({{file_count}} Photos)</span>
+                </a>
+            </li>
+        {{/albums:data:folder}}
+    </ul>
+</div>

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+    <head>
+        {{ theme:partial name='metadata' }}
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+                $('#mycarouselOne').jcarousel();
+                $('#mycarouselTwo').jcarousel();
+                $('#mycarouselThree').jcarousel();
+                $('#mycarouselFour').jcarousel();
+                $('#mycarouselFive').jcarousel();
+            });
+        </script>
+    </head>
+    <body>
+        {{ integration:analytics }}
+        <div id="wepper-inner">
+            <form>
+                <!--Start Header-->
+                <header>
+                    {{ theme:partial name="head_logged_in" }}
+                </header>
+
+                <!--End Header--> 
+                <!--Start Body Container-->
+                <div id="body-container-inner" class="clearfix">
+                    <div class="welcome-message">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="20%">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td rowspan="2" width="50px" style="padding:0 10px;">
+                                                {{user:profile_pic user_id = user:id}}
+                                            </td>
+                                            <td><h3>{{user:display_name}}</h3></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table width="100%" border="0" cellspacing="1" cellpadding="5" align="center">
+                                                    <tr>
+                                                        <th align="center" bgcolor="#23699e">Posts</th>
+                                                        <th align="center" bgcolor="#23699e">Following</th>
+                                                        <th align="center" bgcolor="#23699e">Followers</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" bgcolor="#C0F3FF">{{ comments:count}}</td>
+                                                        <td align="center" bgcolor="#C0F3FF">{{ profile:count_following}}</td>
+                                                        <td align="center" bgcolor="#C0F3FF">{{ profile:count_followers}}</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td width="70%"><h2 class="heading-table">Welcome {{user:first_name}}</h2></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <!--Start center-body-container-->
+                    <div class="homepage-bodyinnre-container">
+                        <div class="comman-box clearfix">
+                            <div class="comman-heading">Recommended <button>View All</button></div>
+                            <ul id="mycarouselOne" class="jcarousel-skin-tango stream">
+                                {{ eventsmanager:get_all_events}}
+                                <li>
+                                        {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
+                                        <h2>{{ title }}</h2>
+                                        <span class="cat block">Festival</span>
+                                        <div class="comman-width">
+                                            <a href="" class="float-right">
+                                                {{ follow_count }} <span class="float-right-color">Followers</span>
+                                            </a>
+                                        </div>
+                                        <span class="block new-star">
+                                            <a href="" class="stars comman-star">{{ star_count }}</a>
+                                        </span>
+                                </li>
+                                {{ /eventsmanager:get_all_events }}
+                            </ul>
+                        </div>
+                        <div class="comman-box clearfix">
+                            <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
+                            <ul id="mycarouselTwo" class="jcarousel-skin-tango stream">
+                                {{ eventsmanager:get_all_events}}
+                                <li>
+                                        {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
+                                        <h2>{{ title }}</h2>
+                                        <span class="cat block">Festival</span>
+                                        <div class="comman-width">
+                                            <a href="" class="float-right">
+                                                {{ follow_count }} <span class="float-right-color">Followers</span>
+                                            </a>
+                                        </div>
+                                        <span class="block new-star">
+                                            <a href="" class="stars comman-star">{{ star_count }}</a>
+                                        </span>
+                                </li>
+                                {{ /eventsmanager:get_all_events }}
+                                
+                            </ul>
+                        </div>
+                        <div class="comman-box clearfix">
+                            <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
+                            <ul id="mycarouselThree" class="jcarousel-skin-tango stream">
+                                {{ eventsmanager:get_all_events}}
+                                <li>
+                                        {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
+                                        <h2>{{ title }}</h2>
+                                        <span class="cat block">Festival</span>
+                                        <div class="comman-width">
+                                            <a href="" class="float-right">
+                                                {{ follow_count }} <span class="float-right-color">Followers</span>
+                                            </a>
+                                        </div>
+                                        <span class="block new-star">
+                                            <a href="" class="stars comman-star">{{ star_count }}</a>
+                                        </span>
+                                </li>
+                                {{ /eventsmanager:get_all_events }}
+                            </ul>
+                        </div>
+                        <div class="comman-box clearfix">
+                            <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
+                            <ul id="mycarouselFour" class="jcarousel-skin-tango stream">
+                                {{ eventsmanager:get_all_events}}
+                                <li>
+                                        {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
+                                        <h2>{{ title }}</h2>
+                                        <span class="cat block">Festival</span>
+                                        <div class="comman-width">
+                                            <a href="" class="float-right">
+                                                {{ follow_count }} <span class="float-right-color">Followers</span>
+                                            </a>
+                                        </div>
+                                        <span class="block new-star">
+                                            <a href="" class="stars comman-star">{{ star_count }}</a>
+                                        </span>
+                                </li>
+                                {{ /eventsmanager:get_all_events }}
+                            </ul>
+                        </div>
+                        <div class="comman-box clearfix">
+                            <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
+                            <ul id="mycarouselFive" class="jcarousel-skin-tango stream">
+                                {{ eventsmanager:get_all_events}}
+                                <li>
+                                        {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
+                                        <h2>{{ title }}</h2>
+                                        <span class="cat block">Festival</span>
+                                        <div class="comman-width">
+                                            <a href="" class="float-right">
+                                                {{ follow_count }} <span class="float-right-color">Followers</span>
+                                            </a>
+                                        </div>
+                                        <span class="block new-star">
+                                            <a href="" class="stars comman-star">{{ star_count }}</a>
+                                        </span>
+                                </li>
+                                {{ /eventsmanager:get_all_events }}
+                            </ul>
+                        </div>
+                    </div>
+                    <!--End center-body-container-->
+                    <!--Start left-body-container-->
+                    <div class="right-bodyinnre-container">
+                        <input type='button' class='common' onclick="window.location.href='/densealife-page'" value='Enter Densealife'/>
+                        <!--<a class='button' onclick="window.location.href='/densealife-page'">Enter</a>-->
+                        <!--<button type='' class="common enter-densealife" onclick="window.location.href='/densealife-page'">Enter Densealife</button>-->
+                        {{theme:partial name="right"}}
+                    </div>
+                    <!--End left-body-container-->  
+                </div>
+                <!--End Body Container-->
+                <footer> 
+                    {{ theme:partial name="footer" }}   
+                </footer>
+            </form>
+        </div>
+    </body>
+</html>

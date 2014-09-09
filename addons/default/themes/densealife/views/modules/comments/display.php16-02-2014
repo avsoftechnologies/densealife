@@ -1,0 +1,29 @@
+<?php if ( $comments ): ?>  
+    <ul class="status-blog">
+        <?php foreach ( $comments as $item ): ?>
+            <li class='li-<?php echo $item->id;?>'>
+                <span><?php echo gravatar($item->user_email, 60) ?></span> 
+                <div class="status-aera">
+                    <span class="name"><?php echo $item->user_name ?></span> 
+                    <span>
+                        <?php if ( Settings::get('comment_markdown') and $item->parsed ): ?>
+                            <?php echo $item->parsed ?>
+                        <?php else: ?>
+                            <p><?php echo nl2br($item->comment) ?></p>
+                        <?php endif ?>
+                    </span>
+                    <span class="comman-star stars"><a href="#">4500</a><a href="#">Stars</a><a href="">Comments</a><a href="">Share</a></span> 
+                </div>
+                <ul class="comments-hare">
+                    <?php echo $this->comments->display_children($item->id);?>
+                    <li>
+                        <span><img src="" /></span> 
+                        <div class="status-aera children">
+                            <?php echo $this->comments->form ($item->id); ?>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php endif; ?>

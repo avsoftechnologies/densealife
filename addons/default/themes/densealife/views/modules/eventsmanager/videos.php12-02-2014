@@ -1,0 +1,57 @@
+<div class="comman-heading">Videos</div>
+<ul class="videos">
+    <li>
+        <video width="195" height="195" controls>
+            <source src="videos/movie.mp4" type="video/mp4">
+            <source src="videos/movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+        <span class="name">Video Name</span>
+        <span class="name"><a href="">By User</a><span class="right">June 12, 2014</span></span>
+    </li>
+    <li>
+        <video width="195" height="195" controls>
+            <source src="videos/movie.mp4" type="video/mp4">
+            <source src="videos/movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+        <span class="name">Video Name</span>
+        <span class="name"><a href="">By User</a><span class="right">June 12, 2014</span></span>
+    </li>
+    <li>
+        <video width="195" height="195" controls>
+            <source src="videos/movie.mp4" type="video/mp4">
+            <source src="videos/movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+        <span class="name">Video Name</span>
+        <span class="name"><a href="">By User</a><span class="right">June 12, 2014</span></span>
+    </li>
+    <li>
+        <video width="195" height="195" controls>
+            <source src="videos/movie.mp4" type="video/mp4">
+            <source src="videos/movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+        <span class="name">Video Name</span>
+        <span class="name"><a href="">By User</a><span class="right">June 12, 2014</span></span>
+    </li>
+    <li>
+        <video width="195" height="195" controls>
+            <source src="videos/movie.mp4" type="video/mp4">
+            <source src="videos/movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+        <span class="name">Video Name</span>
+        <span class="name"><a href="">By User</a><span class="right">June 12, 2014</span></span>
+    </li>
+    <li>
+        <video width="195" height="195" controls>
+            <source src="videos/movie.mp4" type="video/mp4">
+            <source src="videos/movie.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+        <span class="name">Video Name</span>
+        <span class="name"><a href="">By User</a><span class="right">June 12, 2014</span></span>
+    </li>
+</ul>
