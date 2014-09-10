@@ -1,5 +1,0 @@
-<?php echo form_open("trends/create",'class="form-trend"'); ?>
-<noscript><?php echo form_input('d0ntf1llth1s1n', '', 'style="display:none"'); ?></noscript>
-<?php echo form_hidden('entry', $entry_hash); ?>
-<button class="btn-color common ctrl_trend"><?php echo $text;?></button>
-<?php echo form_close();?>

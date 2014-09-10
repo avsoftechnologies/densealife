@@ -34,17 +34,17 @@
 // Development
 $db[PYRO_DEVELOPMENT] = array(
 	'hostname'		=> 	'localhost',
-	'username'		=> 	'avsoftechnologi',
-	'password'		=> 	'tMaFj2D5',
-	'database'		=> 	'avsoftechnologi',
-	'dbdriver' 		=> 	'mysqli',
-	'dbprefix' 		=>	'',
+	'username'		=> 	'root',
+	'password'		=> 	'',
+	'database'		=> 	'pyrocms_stage',
+	'dbdriver' 		=> 	'mysql',
+	'active_r' 		=>	TRUE,
 	'pconnect' 		=>	FALSE,
-	'db_debug' 		=>	TRUE,
+	'db_debug' 		=>	FALSE,
 	'cache_on' 		=>	FALSE,
 	'char_set' 		=>	'utf8',
 	'dbcollat' 		=>	'utf8_unicode_ci',
-	'port' 	 		=>	'3306',
+	'port' 	 		=>	3306,
 
 	// 'Tough love': Forces strict mode to test your app for best compatibility
 	'stricton' 		=> TRUE,

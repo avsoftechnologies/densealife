@@ -370,19 +370,19 @@ class EventsManager_m extends MY_Model
         $array  = $this->_process($input);
         // Update all except author
         $result = parent::update($id, $array);
-
+        
         // Doing this work after for PHP < 5.3
         //$result = $this->save_thumbnail($id, $input);
         // Maps
         if (isset($input['show_map']) or isset($input['show_map_clone'])) {
             $show_map = !empty($input['show_map']) ? $input['show_map'] : (!empty($input['show_map_clone']) ? $input['show_map_clone'] : false);
             $result   = parent::update($id, array('show_map' => $show_map));
-        } else {
+        } else {            
             $result = parent::update($id, array('show_map' => false));
-        }
+        }         
         if (isset($input['pos_method'])) {
             if ($input['pos_method'] === 0) { // Automatic mode
-                $result = parent::update($id, array('pos_lat' => null, 'pos_lng' => null));
+                $result = parent::update($id, array('pos_lat' => NULL, 'pos_lng' => NULL));
             } else { // Latitude/longitude mode
                 $result = parent::update($id, array('pos_lat' => $input['pos_lat'], 'pos_lng' => $input['pos_lng']));
             }

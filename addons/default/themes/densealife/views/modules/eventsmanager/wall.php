@@ -15,17 +15,12 @@
 </div>
 {{else}}
 <section>
-    <div style='border-bottom: 2px solid skyblue;
-    color: #05a6cc;
-    font-size: 14px;
-    padding: 58px;
-    text-align: center;'>
-        {{message}}
-        
-        <div style='margin-left:160px;'>
-            {{button:follow_event event_id='<?php echo $event->id; ?>'}}
-        </div>
-    </div>
+    <table align="center">
+        <tr>
+            <td>{{message}}</td>
+            <td>{{button:follow_event event_id='<?php echo $event->id; ?>'}}</td>
+        </tr>
+    </table>
 </section>
 {{endif}}
 

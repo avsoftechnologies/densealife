@@ -407,7 +407,7 @@ class Plugin_User extends Plugin
         if (!is_null($comment_id)) {
             $comment = $this->db->select('*, if(c.user_id = e.author, 1, 0) as is_author_post', false)
                     ->from('comments as c')
-                    ->join('events as e', 'e.id = c.entry_id', 'inner')
+                    ->join('events as e', 'e.id = c.entry_id', 'left')
                     ->where('c.id', $comment_id)
                     ->group_by('c.id')
                     ->get()

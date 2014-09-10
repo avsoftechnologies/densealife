@@ -80,7 +80,6 @@ class Index extends Public_Controller
 
             $sub_cat_id = $sub_cat_ids[$sub_cat_slug];
         }
-
         $trendings = $this->trends->get_trending('', $type, $sub_cat_id, 3);
 
         $favorites = $this->trends->get_favorites('', $type, $sub_cat_id, 3);
