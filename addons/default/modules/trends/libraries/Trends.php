@@ -221,11 +221,30 @@ class Trends
         // Return the awesome trends view
         return $this->load_view('link_follow', array(
                 'data'     => $encrypted,
-                'text'     => $this->get_trend_label($user_id, $entry_id, TREND_FOLLOW),
+                'text'     => $this->get_trend_label($user_id, $entry_id, TREND_FOLLOW, $data['entry_type'], true),
                 'class'    => $class,
                 'entry_id' => $entry_id
             )
         );
+    }
+    
+    public function button_follow($entry_id, $entry_type = 'event', $class = null, $reload = false)
+    {
+        $user_id = ci()->current_user->id ; 
+        $data      = array('user_id'    => $user_id,
+            'entry_type' => $entry_type,
+            'entry_id'   => $entry_id,
+            'trend'      => TREND_FOLLOW, 
+            'reload'      => $reload);
+        $encrypted = ci()->encrypt->encode(serialize($data));
+        return $this->load_view('link_follow', array(
+                'data'     => $encrypted,
+                'text'     => $this->get_trend_label($user_id, $entry_id, TREND_FOLLOW, $entry_type, true),
+                'class'    => $class,
+                'entry_id' => $entry_id, 
+            )
+        );
+        
     }
 
     public function link_star($entry_id, $entry_type = null, $variation = 'icon')
@@ -247,10 +266,10 @@ class Trends
         );
     }
 
-    public function get_trend_label($user_id, $entry_id, $trend)
+    public function get_trend_label($user_id, $entry_id, $trend, $entry_type = 'event')
     {
-        $my_trend = ci()->trend_m->get_by(array('user_id' => $user_id, 'entry_id' => $entry_id));
-        $label    = null;
+        $my_trend = ci()->trend_m->get_by(array('user_id' => $user_id, 'entry_id' => $entry_id, 'entry_type' => $entry_type));
+
         switch ($trend) {
             case TREND_FOLLOW:
                 if (isset($my_trend->follow) && $my_trend->follow == 'true') {
@@ -267,7 +286,6 @@ class Trends
                 }
                 break;
             case TREND_STAR:
-
                 if (!empty($my_trend->star) && $my_trend->star == 'true') {
                     $label = 'Unstar';
                 } else {
@@ -325,12 +343,10 @@ class Trends
         return (int) ci()->db->where($where)->count_all_results('comment_trends');
     }
 
-    public function count_followers($entry_id, $entry_type = 'event')
+    public function count_followers($entry_id)
     {
-        $where['entry_id']   = $entry_id;
-        $where['entry_type'] = $entry_type;
-        $where['follow']     = 'true';
-        return ci()->db->where($where)->count_all_results('trends');
+        return ci()->db->where("entry_id = '".$entry_id."' and follow='true' and (entry_type='event' or entry_type='interest')")->count_all_results('trends');
+
     }
 
     public function count($trend, $entry_type = null, $user_id = null)
@@ -477,7 +493,6 @@ class Trends
 
     public function get_popular_entry($limit = null)
     {
-        //$rs = ci()->trend_m->get_trending($limit); 
         $rs = ci()->trend_m->get_favorites($limit);
         echo '<pre>';
         print_r($rs);

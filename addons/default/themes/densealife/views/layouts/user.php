@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         {{ theme:partial name='metadata' }}
+        <script type="text/javascript" src="/js/album.js"></script>
     </head>
 
     <body>
@@ -24,7 +25,6 @@
                         <li data-user="{{_user:username}}" class="user-page-links user-page-friends<?php echo (($this->router->fetch_method()=='friends') ? ' active ' : '');?>"><a href="#friends">Friends</a></li>
                     </ul>
                 </div>
-                <!--Start left-body-container-->
                 <div class="left-bodyinnre-container">
                     <span class="clear user-name">{{_user:display_name}}</span>
                     <span class="user-picutre clearfix">{{user:profile_pic_180 user_id=_user:id}}</span>
@@ -49,40 +49,29 @@
                     <div class="comman-box">
                         {{theme:partial name='blocks/social_profiles'}}
                     </div>
-                    <div class="comman-box">
-                        {{theme:partial name='blocks/friends' user_id=_user:id}}
-                    </div>
+                     <div class="comman-box">
+                        {{profile:block_friends user_id=_user:id}}
+                     </div>
                 </div>
-                <!--End left-body-container--> 
-                <!--Start center-body-container-->
+                
                 <div class="center-bodyinnre-container">
                     {{theme:partial name='content'}}
                 </div>
-                <!--End center-body-container--> 
-                <!--Start right-body-container-->
                 <div class="right-bodyinnre-container">
                     <div class="comman-box">
                         <span class="heading-comman">Information</span>
                         {{user:profile user_id=_user:id}}
                         <p>From: {{address_line1}},{{address_line2}}, {{address_line3}}</p>
-                        <p>Works: Employer Name, 2014</p>
+<!--                        <p>Works: Employer Name, 2014</p>
                         <p>School: School Name, 2014</p>
-                        <p>RelationShip: Unmarrid</p>
+                        <p>RelationShip: Unmarrid</p>-->
                         <p>Born: {{ helper:date format="F,dS Y" timestamp=dob }}</p>
                         {{/user:profile}}
                     </div>
-                    <div class="comman-box">
-                        {{theme:partial name="blocks/user_interests" user_id=_user:id}}
-                    </div>
-                    <div class="comman-box">
-                        {{theme:partial name="blocks/user_favorites" user_id=_user:id}}
-                    </div>
-                    <div class="comman-box">
-                        {{theme:partial name="blocks/user_events" user_id=_user:id}}
-                        
-                    </div>
+                    {{profile:right_side_bar_blocks user_id=_user:id type='event'}}
+                    {{profile:right_side_bar_blocks user_id=_user:id type='interest'}}
+                    {{profile:right_side_bar_blocks user_id=_user:id type='favorite'}}
                 </div>
-                <!--End Right-body-container--> 
             </div>
             <footer>
                 {{ theme:partial name="footer" }}   

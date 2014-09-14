@@ -1,7 +1,8 @@
 <div class="comman-box clearfix">
 <div class="comman-heading">Activity</div>
+<div class="clear">&nbsp;</div>
 <?php if($allowed):?>
-<?php echo $this->comments->display_my_comments($_user); ?>
+<?php echo $this->comments->display_my_comments($_user, true, true); ?>
 <?php else:?>
 
     <div class="block-pages">

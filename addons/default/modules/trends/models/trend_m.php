@@ -122,7 +122,7 @@ class Trend_m extends MY_Model
 
     public function if_exists($input)
     {
-        unset($input['trend']);
+        unset($input['trend'], $input['reload']);
         return (int) $this->count_by($input);
     }
 
@@ -171,8 +171,8 @@ class Trend_m extends MY_Model
             $cat         = $this->event_categories_m->get_by('slug', 'event');
             $category_id = $cat->id;
         }
-
-        $this->db->select('E.*,C.created_on , count(*) as counter')
+        
+        $this->db->select('E.id as entry_id, E.*,C.created_on , count(*) as counter')
                 ->from('events as E')
                 ->join('comments as C', 'E.id = C.entry_id', 'left')
                 ->where('(C.created_on BETWEEN DATE_SUB(C.created_on , INTERVAL 5 day) and NOW())');
@@ -229,7 +229,7 @@ class Trend_m extends MY_Model
     public function get_favorites($user_id = null, $limit = null, $entry_type = 'event', $sub_category = null)
     {
         $sql = "
-                        SELECT E.*   
+                        SELECT E.id as entry_id, E.*   
                         FROM {$this->db->dbprefix('events')} AS E
                         WHERE E.id IN (
                                             SELECT entry_id 
@@ -493,14 +493,16 @@ class Trend_m extends MY_Model
      * @param int $event_id
      * @return boolean
      */
-    public function am_i_following($event_id)
+    public function am_i_following($event_id, $user_id = null)
     {
-
+        if($user_id == ''){
+            $user_id = $this->current_user->id; 
+        }
         $trend = $this
                 ->select('follow')
                 ->get_by(
                 array(
-                    'user_id'  => $this->current_user->id,
+                    'user_id'  => $user_id,
                     'entry_id' => $event_id
                 )
         );

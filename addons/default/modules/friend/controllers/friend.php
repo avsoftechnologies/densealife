@@ -116,4 +116,17 @@ class Friend extends Public_Controller
         
         $this->template->build_json(array('count' => count($notifications))) ;
     }
+    
+    public function cancel_request()
+    {
+        $friend_id = $this->input->post('fid');
+        $thread = $this->friend_m->select('thread')->get_by(array('user_id' => $this->current_user->id , 'friend_id' => $friend_id));
+        $status = 'failure'; 
+        if($thread) {
+            $this->notification_m->delete_by('thread', $thread->thread);
+            $this->friend_m->delete_by('thread', $thread->thread);
+            $status = 'success'; 
+        }
+        $this->template->build_json(array('status' => $status)) ;
+    }
 }

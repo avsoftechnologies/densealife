@@ -59,8 +59,7 @@ class Follower_m extends MY_Model
      */
     public function count_followers($user_id)
     {
-        $count = parent::count_by(array('user_id' => $user_id)); 
-        return ($count ? $count : "-") ;
+        return parent::count_by(array('user_id' => $user_id)); 
     }
     
     /**

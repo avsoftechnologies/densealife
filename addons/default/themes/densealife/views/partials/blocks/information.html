@@ -1,9 +1,34 @@
 
 <span class="heading-comman">Information</span>
 <ul>
-    <li title="Message">{{ theme:image file="msg.png"}}<span class="left-links"><a href="/messages">Message</a></span></li>
-    <li title="Photos">{{ theme:image file="photos.png"}}<span class="left-links"><a href="/user/{{_user:username}}#photos">Photos</a></span></li>
-    <li title="Events">{{ theme:image file="events-icon.png"}}<span class="left-links"><a href="/profile/followers">Followers {{profile:count_followers user_id=_user:id}}</a></span></li>
-    <li title="Friend Request">{{ theme:image file="friendreq.png"}}<span class="left-links"><a href="/profile/friends/find">Find Friends</a></span></li>
-    <li title="Friend Request">{{ theme:image file="friendreq.png"}}<span class="left-links"><a href="/profile/notifications">Notifications </a></span></li>
+    <li title="Message">
+        {{ theme:image file="msg.png"}}
+        <span class="left-links">
+            <a href="/messages" target="__blank" title="Message">Message</a>
+        </span>
+    </li>
+    <li title="Photos">
+        {{ theme:image file="photos.png"}}
+        <span class="left-links">
+            <a href="/user/{{_user:username}}#photos" title="Photos">Photos</a>
+        </span>
+    </li>
+    <li title="Events">
+        {{ theme:image file="events-icon.png"}}
+        <span class="left-links">
+            <a href="/profile/followers" target="__blank" title="Followers">Followers {{profile:count_followers user_id=_user:id seperator='-'}}</a>
+        </span>
+    </li>
+    <li title="Friend Request">
+        {{ theme:image file="friendreq.png"}}
+        <span class="left-links">
+            <a href="/profile/friends/find" target="__blank" title="Find Friends">Find Friends</a>
+        </span>
+    </li>
+    <li title="Friend Request">
+        {{ theme:image file="friendreq.png"}}
+        <span class="left-links">
+            <a href="/profile/notifications" target="__blank" title="Notifications">Notifications </a>
+        </span>
+    </li>
 </ul>

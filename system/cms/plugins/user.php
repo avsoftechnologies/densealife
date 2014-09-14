@@ -451,19 +451,6 @@ class Plugin_User extends Plugin
         }
     }
 
-    public function friends($user_id = null)
-    {
-        $user_id = $this->attribute('user_id', $user_id);
-        $this->load->model('friend/friend_m');
-        return $this->friend_m->get_friends($user_id);
-    }
-
-    public function friend_count($user_id = null)
-    {
-        $user_id = $this->attribute('user_id', $user_id);
-        return count($this->friends($user_id));
-    }
-
     public function friends_exist($user_id = null)
     {
 //            $user_id  = $this->attribute('user_id', $user_id);

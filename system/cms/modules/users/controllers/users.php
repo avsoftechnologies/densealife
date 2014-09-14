@@ -29,6 +29,8 @@ class Users extends Public_Controller
         $this->load->library('trends/Trends');
         $this->load->library('files/files');
         $this->load->model('users/album_m');
+        $this->load->model('eventsmanager/eventsmanager_m');
+        
     }
 
     /**
@@ -789,13 +791,14 @@ class Users extends Public_Controller
         }
         $user or show_404();
         $albums = $this->album_m->get_albums($user->id);
+        
         $this->template->set('albums', $albums);
         $this->load->helper('friend/friend');
         Asset::add_path('friend', 'addons/default/modules/friend/');
         $this->template->append_metadata('<script> var current_user = "' . $user->username . '"</script>')
                 ->append_js('module::user.js')
                 ->append_js('module::album.js')
-                ->append_js('wall.js')
+                //->append_js('wall.js')
                 ->append_js('friend::friend.js')
                 ->set('username', $user->username);
         //->set('random_photos',$this->load->view('profile/random_photos', array('photos' => $this->album_m->get_image_files($user->id)), true));
@@ -817,7 +820,6 @@ class Users extends Public_Controller
     {
         $user   = $this->_settings($username);
         $photos = $this->album_m->get_image_files($user->id);
-
         $this->template
                 ->build('profile/photos', array(
                     '_user'  => $user,
@@ -828,10 +830,10 @@ class Users extends Public_Controller
     private function _load_list_view($user_id, $type='event')
     {
         $this->load->model('eventsmanager/eventsmanager_m');
-        $events = $this->eventsmanager_m->get_all_events($user_id, $type);
+        $events = $this->eventsmanager_m->get_following_entry($user_id, $type);
         $list = null;
         foreach ($events as $event):
-            $list.= load_view('profile', '/index/loop', array('data' => $event));
+            $list.= load_view('profile', '/index/loop', array('data' => $event, 'user_id'  => $user_id));
         endforeach;
         return $list; 
     }
@@ -868,8 +870,16 @@ class Users extends Public_Controller
     public function favorites($username = null)
     {
         $user = $this->_settings($username);
-        $this->template->build('profile/favorites', array(
-            '_user' => $user,
+        $this->load->model('eventsmanager/eventsmanager_m');
+        $favorites = $this->eventsmanager_m->get_favorite_entry($user->id,100);
+        $list = null;
+        foreach ($favorites as $favorite):
+            $list.= load_view('profile', '/index/loop', array('data' => $favorite, 'user_id'  => $user->id));
+        endforeach;
+
+        $this->template->build('profile/events', array(
+            'title'=> 'Favorites',
+            'list' => $list,
         ));
     }
 

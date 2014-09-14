@@ -31,13 +31,12 @@
 <?php endif ; ?>
 <div class="clear"></div>
 <script>
-    
-$('.form_album').on('mouseover', '.videos li', function() {
-    $(this).css({'border': '1px solid black', 'padding': '5px', 'z-index': '1000'});
+$('body').on('mouseover', '.videos li', function() {
+    $(this).css({'border': '1px solid black', 'padding': '5px', 'z-index': '1000', 'position': 'relative'});
     $(this).children('.action').removeClass('d-none');
 });
 
-$('.form_album').on('mouseout', '.videos li', function() {
+$('body').on('mouseout', '.videos li', function() {
     $(this).css({'border': 'none', 'padding': '0px', 'z-index': 0});
     $(this).children('.action').addClass('d-none');
 });

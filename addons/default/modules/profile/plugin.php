@@ -48,6 +48,73 @@ class Plugin_Profile extends Plugin
         }
     }
     
+    public function right_side_bar_blocks()
+    {
+        $this->load->model('eventsmanager/eventsmanager_m');
+        $user_id = $this->attribute('user_id');
+        $type = $this->attribute('type');
+        switch($type) {
+            case 'event':
+            case 'interest':
+                $items = $this->eventsmanager_m->get_following_entry($user_id, $type, 6);
+                $count = $this->eventsmanager_m->get_following_entry_count($user_id, $type);
+                if($type=='event') {
+                    $title = 'Events';
+                    $hashValue = 'events';
+                }else{
+                    $title = 'Interests';
+                    $hashValue = 'interests';
+                }
+                break;
+            case 'favorite':
+                $items = $this->eventsmanager_m->get_favorite_entry($user_id, 6);
+                $count = $this->eventsmanager_m->get_favorite_entry_count($user_id); 
+                $title = 'Favorites';
+                $hashValue = 'favorites';
+                break;
+            
+            
+        }
+        if($count) {
+            return load_view(
+                'eventsmanager',
+                'layout/user/entry_block',
+                array(
+                    'items' => $items,
+                    'count' => $count,
+                    'title' => $title,
+                    'hashValue' => $hashValue
+                )
+            );
+        }
+    }
+    
+    public function block_friends($user_id = null)
+    {
+        $user_id = $this->attribute('user_id', $user_id);
+        $this->load->model('friend/friend_m');
+        $friends = $this->friend_m->get_friends($user_id);
+        $friend_count  = count($friends); 
+        if($friend_count) {
+            return load_view(
+                'eventsmanager',
+                'layout/user/friend_block',
+                array(
+                    'friends' => $friends,
+                    'count' => $friend_count,
+                    'title' => 'Friends',
+                    'hashValue' => 'friends'
+                )
+            );
+        }
+    }
+
+    public function friend_count($user_id = null)
+    {
+        $user_id = $this->attribute('user_id', $user_id);
+        return count($this->friends($user_id));
+    }
+
 }
 
 /* End of file plugin.php */

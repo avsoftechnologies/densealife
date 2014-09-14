@@ -110,10 +110,11 @@ class Comment_m extends MY_Model
         }
         $this->_get_all_setup();
         $sharedIncluded = false;
-        $this->db->select('s.comment as comment_on_share, s.shared_at, p1.display_name as shared_by');
+        $this->db->select('s.comment as comment_on_share, s.shared_at, p1.display_name as shared_by, e.author');
+        $this->db->select("IF(s.shared_at is null, c.created_on,s.shared_at) AS priority", false);
         $this->db->join('shares as s','s.fk_comment_id = c.id', 'left');
         $this->db->join('profiles as p1', 'p1.user_id = s.user_id', 'left');
-        $this->db->select("IF(s.shared_at is null, c.created_on,s.shared_at) AS priority", false);
+        $this->db->join('events as e', 'e.id = c.entry_id', 'left');
         $where = "(c.user_id = $user_id)";
         if(!empty($friends_ids)){
             $where = "(s.user_id IN (". implode(',',$friends_ids).") OR c.user_id IN (". implode(',',$friends_ids).") OR s.user_id =".$user_id." OR c.user_id =".$user_id.")";
@@ -127,15 +128,19 @@ class Comment_m extends MY_Model
                 ->where($where)
                 ->where('c.parent_id', $parent_id)
                 ->where('c.is_active', 1);
-                if(!$is_main_post){
-                    $limit = !is_null($limit)  ? $limit : Comments::LIMIT_POST_COMMENTS;
-                    $offset = !is_null($offset) ? $offset : 0 ; 
-                    $this->db->limit($limit, $offset);
-                }
+        
+        if($this->router->fetch_module() == 'users') {
+            $this->db->having('author != `user_id`');
+        }
         if ($parent_id == 0) {
             $this->db->order_by('priority','DESC');
         }
         
+        if(!$is_main_post){
+            $limit = !is_null($limit)  ? $limit : Comments::LIMIT_POST_COMMENTS;
+            $offset = !is_null($offset) ? $offset : 0 ; 
+            $this->db->limit($limit, $offset);
+        }
         $result_set = $this->get_all();
         return $result_set;
     }

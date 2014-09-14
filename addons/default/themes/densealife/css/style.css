@@ -266,7 +266,7 @@ div.tabs ul li{ width:auto; padding:1% 2%; font-weight:normal; float:left;border
 }
 .comman-width{width:160px;}
 span.location{display:block; margin:10px auto;clear:both;}
-ul.comman-links{margin:0px 21% 0px;width:58%;}
+ul.comman-links{margin:0px 21% 0px;width:59%;}
 ul.comman-links li{display:inline-block; margin:10px 5px; padding:8px 0px;width:113px;border:1px solid #d8d8d8;text-align:center;background-color:#05a6cc;text-transform: uppercase;color: #ffffff;font-size: 13px;}
 ul.comman-links li:hover{background-color: #23699e;}
 ul.comman-links li a{color:#ffffff;}
