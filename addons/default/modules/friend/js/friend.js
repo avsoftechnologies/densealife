@@ -22,6 +22,8 @@ var friend = {
         $.post('/friend/add', {user: user_id}, function(response) {
             if (response.status === 'success') {
                 $('.btn_add_friend_'+user_id).text('Request sent');
+            }else{
+                alert(response.msg);
             }
 
         }, 'json');
@@ -34,13 +36,13 @@ var friend = {
 
         }, 'json');
     }, 
-    checkPendingNotificationsCount: function(user_id){
+    checkPendingNotificationsCount: function(){
         var otherCount = 0;
-        $.post('/profile/notifications/pending', {user: user_id}, function(response) {
+        $.post('/profile/notifications/pending', {}, function(response) {
             $.each(response.notifications, function(key, value){
-                if(value.type == 'message'){
+                if(value.type === 'message'){
                        $('.message-notification-count').removeClass('d-none').text(value.count);
-                   }else if(value.type=='friend'){
+                   }else if(value.type=== 'friend'){
                        $('.friend-notification-count').removeClass('d-none').text(value.count);
                    }else{
                        otherCount+=parseInt(value.count);
@@ -70,7 +72,7 @@ var friend = {
     unfriend : function(user_id){
         $.post('/friend/unfriend', {user: user_id}, function(response) {
             if (response.status === 'success') {
-                $('.btn_add_friend_'+user_id).text('+ Add Friend');
+                window.location.realod();
             }
 
         }, 'json');
@@ -81,19 +83,26 @@ var friend = {
         $.post('/profile/friends/invite_event', {entry_id: eid, friend_id:fid}, function(response) {
             if (response.status === 'success') {
                 $('.li_'+ fid).fadeOut().remove();
-                if($('.friend_suggestions').siblings('li').length ==0){
+                if($('.friend_suggestions').siblings('li').length === 0){
                     $('.activity-feeds').remove();
                 }
                 
             }
 
         }, 'json');
-    },
+    }, 
+    
+    cancel_request: function(fid)
+    {
+        $.post('/friend/cancel_request', {fid: fid}, function(response) {
+            if (response.status === 'success') {
+                window.location.reload();
+            }
+        }, 'json');
+    }
     
     
 };
 
-if(CURRENT_USER!=''){
-    friend.checkPendingNotificationsCount(CURRENT_USER);
-    setInterval(function(){friend.checkPendingNotificationsCount(CURRENT_USER)},10000);
-}
+//    friend.checkPendingNotificationsCount();
+//    setInterval(function(){friend.checkPendingNotificationsCount();},10000);

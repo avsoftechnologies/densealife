@@ -370,19 +370,19 @@ class EventsManager_m extends MY_Model
         $array  = $this->_process($input);
         // Update all except author
         $result = parent::update($id, $array);
-
+        
         // Doing this work after for PHP < 5.3
         //$result = $this->save_thumbnail($id, $input);
         // Maps
         if (isset($input['show_map']) or isset($input['show_map_clone'])) {
             $show_map = !empty($input['show_map']) ? $input['show_map'] : (!empty($input['show_map_clone']) ? $input['show_map_clone'] : false);
             $result   = parent::update($id, array('show_map' => $show_map));
-        } else {
+        } else {            
             $result = parent::update($id, array('show_map' => false));
-        }
+        }         
         if (isset($input['pos_method'])) {
             if ($input['pos_method'] === 0) { // Automatic mode
-                $result = parent::update($id, array('pos_lat' => null, 'pos_lng' => null));
+                $result = parent::update($id, array('pos_lat' => NULL, 'pos_lng' => NULL));
             } else { // Latitude/longitude mode
                 $result = parent::update($id, array('pos_lat' => $input['pos_lat'], 'pos_lng' => $input['pos_lng']));
             }
@@ -409,6 +409,7 @@ class EventsManager_m extends MY_Model
         if (isset($folder_id)) {
             $this->db->where('folder_id', $folder_id);
         }
+        $this->db->where('hidden', 0);
         return $images->get('files')->result();
     }
 
@@ -518,4 +519,85 @@ class EventsManager_m extends MY_Model
         return parent::update($id, array('cover_photo_pos' => str_replace('px', '', $input['new_cp_pos'])));
     }
 
+    /**
+     * To fetch all the entry under category event or slug
+     * @param int $user_id
+     * @param string $entry_type event|slug
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function get_following_entry($user_id, $entry_type = 'event', $limit = 10, $offset = 0)
+    {
+        $cat_id              = $this->get_entry_category_id_by_slug($entry_type);
+        $following_interests = $this->join('trends as t', 't.entry_id = events.id', 'inner')
+                ->limit($limit, $offset)
+                ->get_many_by(
+                    array(
+                        't.user_id'          => $user_id,
+                        't.follow'           => 'true',
+                        'events.category_id' => $cat_id,
+                        't.entry_type'       => $entry_type
+                    )
+                );
+        return $following_interests;
+    }
+    
+    /**
+     * To fetch the count of entries any particular user is following
+     * @param int $user_id
+     * @param string $entry_type
+     * @return int 
+     */
+    public function get_following_entry_count($user_id, $entry_type = 'event') 
+    {
+        $cat_id = $this->get_entry_category_id_by_slug($entry_type); 
+        $count = $this->join('trends as t', 't.entry_id = events.id', 'inner')
+                    ->count_by(
+                            array(
+                                't.user_id' => $user_id, 
+                                't.follow' => 'true',
+                                'events.category_id' => $cat_id,
+                                't.entry_type'       => $entry_type
+                            )
+                    );
+        return $count; 
+        
+    }
+    
+    /**
+     * To fetch the category id by slug under any event or interest. 
+     * @param string $slug
+     * @return int
+     */
+    public function get_entry_category_id_by_slug($slug)
+    {
+        $cat = $this->event_categories_m->get_by('slug', $slug);
+        return $cat->id;
+    }
+    
+    public function get_favorite_entry($user_id, $limit = 10, $offset = 0)
+    {
+        $favorite_entry = $this->join('trends as t', 't.entry_id = events.id', 'left')
+                ->limit($limit, $offset)
+                ->get_many_by(
+                        array(
+                                't.user_id' => $user_id,
+                                't.follow' => 'true',
+                        )
+                );
+        return $favorite_entry;
+    }
+    
+    public function get_favorite_entry_count($user_id)
+    {
+        $count = $this->join('trends as t', 't.entry_id = events.id', 'left')
+                ->count_by(
+                        array(
+                                't.user_id' => $user_id,
+                                't.follow' => 'true',
+                        )
+                );
+        return $count;
+    }
 }

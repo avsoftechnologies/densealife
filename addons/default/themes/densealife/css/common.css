@@ -603,6 +603,7 @@ p, dfn, aside, div, li, a{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width:126px;
 }
 .black-arrow-down{
   background-position: -208px -111px;

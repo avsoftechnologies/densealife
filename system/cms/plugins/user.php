@@ -407,7 +407,7 @@ class Plugin_User extends Plugin
         if (!is_null($comment_id)) {
             $comment = $this->db->select('*, if(c.user_id = e.author, 1, 0) as is_author_post', false)
                     ->from('comments as c')
-                    ->join('events as e', 'e.id = c.entry_id', 'inner')
+                    ->join('events as e', 'e.id = c.entry_id', 'left')
                     ->where('c.id', $comment_id)
                     ->group_by('c.id')
                     ->get()
@@ -449,19 +449,6 @@ class Plugin_User extends Plugin
         } else {
             return img(array('src' => '/assets/images/no-profile-pic.png', 'width' => 180, 'height' => 180));
         }
-    }
-
-    public function friends($user_id = null)
-    {
-        $user_id = $this->attribute('user_id', $user_id);
-        $this->load->model('friend/friend_m');
-        return $this->friend_m->get_friends($user_id);
-    }
-
-    public function friend_count($user_id = null)
-    {
-        $user_id = $this->attribute('user_id', $user_id);
-        return count($this->friends($user_id));
     }
 
     public function friends_exist($user_id = null)

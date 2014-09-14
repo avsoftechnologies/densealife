@@ -17,7 +17,7 @@
                     appId: FB_APP_ID, // App ID
                     status: true,
                     cookie: true,
-                    xfbml: true,
+                    xfbml: true
                 });
 
             };
@@ -38,25 +38,15 @@
         </script>
 
         <div id="wepper"> 
-            <!--Start Header-->
             {{ theme:partial name="header" }}
-            <!--End Header--> 
-            <!--Start Body Container-->
             <div id="body-container" class="clearfix"> 
-
-                <!--Start left-body-container-->
-                <!--{{theme:partial name="left"}}-->
                 <div class="left-body-container">
                     {{ theme:partial name="content" }}
                 </div>
-                <!--End left-body-container--> 
-                <!--Start right-body-container-->
                 <div class="right-body-container">
                     {{theme:partial name="right"}}
                 </div>
-                <!--End Right-body-container--> 
-            </div>
-            <!--End Body Container-->
+            </div>            
             <footer> 
                 {{ theme:partial name="footer" }}    
             </footer>

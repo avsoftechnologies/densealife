@@ -51,3 +51,49 @@
     };
  
 })(jQuery);
+
+$('.form-trend').ajaxForm({
+    type: 'POST',
+    delegation: true, // for live response
+    dataType: 'json',
+    beforeSubmit: function() {
+        $.fancybox.showLoading();
+    },
+    success: function(response) {
+
+        if (response.trend == '1') {
+            $follow_place_holder = $('.count_follow_' + response.entry);
+            var follow_count = parseInt($follow_place_holder.html());
+            if (response.action == '-1') {
+                $('.btn-follow-' + response.entry).text('Follow');
+                $follow_place_holder.text(eval(follow_count - 1));
+            } else {
+                $('.btn-follow-' + response.entry).text('Following');
+                $follow_place_holder.text(eval(follow_count + 1));
+            }
+        }
+
+        if (response.trend == '2') {
+            if (response.action == '-1') {
+                $('.btn-favorite-' + response.entry).text('Add Favorite');
+            } else {
+                $('.btn-favorite-' + response.entry).text('Favorite');
+            }
+        }
+        if (response.trend == '3') {
+            $star_place_holder = $('.count_star_' + response.entry);
+            star_count = parseInt($star_place_holder.html());
+            if (response.action == '-1') {
+                $star_place_holder.text(eval(star_count - 1));
+            } else {
+                $star_place_holder.text(eval(star_count + 1));
+            }
+        }
+        if(response.reload === true) {
+            window.location.reload();
+        }
+    },
+    complete: function() {
+        $.fancybox.hideLoading();
+    }
+});

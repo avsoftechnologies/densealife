@@ -224,13 +224,12 @@ class Friend_m extends MY_Model
     {
         $curent_user_id = $curent_user_id =='' ? $this->current_user->id : $curent_user_id;
         $query = $this->query("
-                SELECT fl.status , if(user_id ='" . $curent_user_id . "' ,s.requester,s.responder) as status_label
+                SELECT fl.status , user_id as sender, friend_id as receiver,  if(user_id ='" . $curent_user_id . "' ,s.requester, s.responder) as status_label
                 FROM {$this->db->dbprefix('friend_list')} as fl
                 INNER JOIN {$this->db->dbprefix('friend_status')} as s
                 ON s.status = fl.status
                 WHERE (user_id = $uid AND friend_id = {$curent_user_id})
                 OR (friend_id = $uid AND user_id = {$curent_user_id})
-                AND s.status!='initiated'
             ");
         $rs = $query->row();
         return $rs;

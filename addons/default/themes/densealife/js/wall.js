@@ -70,36 +70,6 @@ $(document).ready(function() {
             $('.status-box-text').after('<div class="status-box status-box-media"><form action="' + baseurl + 'eventsmanager/upload_wall_status" method="post" enctype="multipart/form-data" id="myForm"><label for="file">Filename:</label><input type="hidden" name="entry_id" value="' + $(this).data('event') + '"/><input type="hidden" name="title" value="' + $(this).data('title') + '"/><input type="file" name="file" id="file" multiple><br><input type="submit" name="submit" value="Submit"></form></div>')
         }
     });
-
-    $('body').on('click', '.ctrl_trend', function() {
-        var label = $(this).text();
-        var entry = $(this).data('id');
-        if (label == 'Star') {
-            $(this).text('Unstar');
-            if ($(this).hasClass('star')) {
-                $(this).siblings('.star-count').text(parseInt($(this).siblings('.star-count').text()) + 1);
-            }
-        } else if (label == 'Unstar') {
-            $(this).text('Star');
-            if ($(this).hasClass('star')) {
-                $(this).siblings('.star-count').text(parseInt($(this).siblings('.star-count').text()) - 1);
-            }
-        } else if (label == 'Follow') {
-            $(this).text('Following');
-            var selector = $('.count_follow_' + entry);
-            selector.html(parseInt(selector.html()) + 1);
-        } else if (label == 'Following') {
-            $(this).text('Follow');
-            var selector = $('.count_follow_' + entry);
-            selector.html(parseInt(selector.html()) - 1);
-        } else if (label == 'Add Favorite') {
-            $(this).text('Favorite');
-        } else if (label == 'Favorite') {
-            $(this).text('Add Favorite');
-        }
-        $(this).siblings('form').submit();
-    });
-
 });
 $('#myForm').ajaxForm({
     delegation: true, // for live response
@@ -190,46 +160,6 @@ $('.form-status-media').ajaxForm({
         $.fancybox.hideLoading();
     }
 
-});
-
-$('.form-trend').ajaxForm({
-    type: 'POST',
-    delegation: true, // for live response
-    dataType: 'json',
-    beforeSubmit: function() {
-        $.fancybox.showLoading();
-    },
-    success: function(response) {
-
-        if (response.trend == '1') {
-            if (response.action == '-1') {
-                $('.btn-follow-' + response.entry).text('Follow');
-            } else {
-                $('.btn-follow-' + response.entry).text('Following');
-            }
-            window.location.reload();
-        }
-
-        if (response.trend == '2') {
-            if (response.action == '-1') {
-                $('.btn-favorite-' + response.entry).text('Add Favorite');
-            } else {
-                $('.btn-favorite-' + response.entry).text('Favorite');
-            }
-        }
-        if (response.trend == '3') {
-            $star_place_holder = $('.count_star_' + response.entry);
-            star_count = parseInt($star_place_holder.html())
-            if (response.action == '-1') {
-                $star_place_holder.text(eval(star_count - 1))
-            } else {
-                $star_place_holder.text(eval(star_count + 1))
-            }
-        }
-    },
-    complete: function() {
-        $.fancybox.hideLoading();
-    }
 });
 
 $('#form-share').ajaxForm({

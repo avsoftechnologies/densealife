@@ -350,6 +350,7 @@ class Admin extends Admin_Controller
                 ->append_js('module::coverphoto.js')
                 ->append_css('module::imgareaselect/imgareaselect-default.css')
                 ->append_metadata("<script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false&language=" . $this->current_user->lang . "'></script>")
+                ->append_js('module::map.js')
                 ->append_js('crop/jquery.Jcrop.js')
                 ->append_css('crop/jquery.Jcrop.css')
                 ->set('event', $event)

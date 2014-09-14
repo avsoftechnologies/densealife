@@ -66,7 +66,8 @@
                         {{/user:profile}}
                     </div>
                     <div class="comman-box">
-                        {{theme:partial name="blocks/user_interests"}}
+                        <?php echo load_view('eventsmanager','layout/profile/user_interests', array('user_id' => $user->id));?>
+                        <!--{{theme:partial name="blocks/user_interests" user_id=_user:id}}-->
                     </div>
                     <div class="comman-box">
                         {{theme:partial name="blocks/user_favorites" user_id=_user:id}}

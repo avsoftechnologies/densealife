@@ -26,6 +26,8 @@ $count = count($friends);
      <?php if($_user->id == $this->current_user->id):?>
         <div class="txt-center f-bold fs14 mt50">You have not added anyone into your friend list. Find your friends while clicking on the link below:</div>
         <div class="txt-center txt-deco-under"><a href="/profile/friends/find">Find Friends</a></div>
+     <?php else: ?>
+        <div class="txt-center f-bold fs14 mt50">No Friends</div>
      <?php endif;?>
     <?php endif;?>
 </div>
