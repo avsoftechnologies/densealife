@@ -6,7 +6,6 @@
 <div class="clear"></div>
 <hr/>
 <div class="clear"></div>
-
 <?php if ( !empty($showDir) && !empty($albums) && count($albums['data']['folder'] )): ?>
     <ul class="form_album videos ml15">
         <?php foreach ( $albums['data']['folder'] as $album ): ?>

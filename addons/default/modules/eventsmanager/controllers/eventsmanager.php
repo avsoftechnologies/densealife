@@ -49,6 +49,7 @@ class EventsManager extends Public_Controller
 
     private function _set_template_content($slug = null)
     {
+        $this->load->model('users/album_m');
         $slug or show_404();
 
         $event                      = $this->eventsmanager_m->getBy('slug', $slug) or show_404();
@@ -502,12 +503,11 @@ class EventsManager extends Public_Controller
         }
         $albums = $this->album_m->get_albums(null, $event->id);
         
-        foreach ($albums as &$album) {
-            if ($album->count_files != 0) {
+        foreach ($albums['data']['folder'] as &$album) {
+            if ($album->file_count != 0) {
                 $cover              = $this->eventsmanager_m->get_images_files($album->id);
                 $album_cover        = current($cover);
-                $album->cover       = is_object($album_cover) ? $album_cover->path : '';
-                $album->photo_count = count($cover);
+                $album->folder_image = is_object($album_cover) ? $album_cover->id: '';
             }
         }
         $user_uploads = $this->eventsmanager_m->get_user_uploads_by_event_id($event->id);
