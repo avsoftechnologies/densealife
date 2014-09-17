@@ -89,7 +89,7 @@ $('.form-trend').ajaxForm({
                 $star_place_holder.text(eval(star_count + 1));
             }
         }
-        if(response.reload === true) {
+        if(response.reload === 'true') {
             window.location.reload();
         }
     },

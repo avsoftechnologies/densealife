@@ -8,6 +8,9 @@
         </div>
         <div class="post_title">
             <span class="display_name"><?php echo $item->display_name; ?> </span>
+            <?php if($item->entry_title!=''):?>
+            &nbsp; &gtdot; <?=anchor($item->uri, $item->entry_title, array('class' => 'f-bold'))?>
+            <?php endif;?>
 <!--            <span class="color-blue"> &nbsp; shared  <?php echo $item->display_name; ?>'s status</span>-->
             <br />
             <span class="time time-ago">
@@ -60,7 +63,7 @@
                 </a>
             </li>
             <?php endif;?>
-            <?php if($allowcomment) :?>
+            <?php if(!$blacklisted and ($allowcomment or $item->is_friend_post)) :?>
             <li>
             <span>{{user:profile_pic user_id='<?php echo $this->current_user->id; ?>' dim='32' comment_id = '<?php echo $item->id;?>'}}</span> 
             <div class="status-aera children">

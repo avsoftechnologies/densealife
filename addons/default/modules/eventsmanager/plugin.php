@@ -50,7 +50,7 @@ class Plugin_Eventsmanager extends Plugin
     {
         $limit      = $this->attribute('limit', null);
         $user_id    = $this->attribute('user_id', null);
-        $type       = $this->attribute('type', 'event');
+        $type       = $this->attribute('type', null);
         $sub_cat_id = $this->attribute('sub_type', null);
         $this->load->library('trends/Trends');
 
@@ -137,6 +137,15 @@ class Plugin_Eventsmanager extends Plugin
         $user_id    = $this->attribute('user_id', null);
         $entry_type = $this->attribute('entry_type', 'interest');
         return count($this->get_all_events($user_id, $entry_type));
+    }
+    
+    public function event_follower_friends()
+    {
+        $entry_id = $this->attribute('entry_id');
+        $limit = $this->attribute('limit');
+        $this->load->model('eventsmanager/eventsmanager_m');
+        $friends = $this->eventsmanager_m->get_follower_friends($entry_id, $limit);
+        return load_view('eventsmanager', 'layout/event/event_follower_friends', array('follower_friends' => $friends));
     }
 
 }

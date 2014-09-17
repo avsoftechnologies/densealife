@@ -169,7 +169,8 @@ class Plugin_Friend extends Plugin
         $user_id = $this->attribute('user_id');
         $limit = $this->attribute('limit', null);
         $this->load->library('friend/friend');
-        return $this->friend->get_events($user_id, $limit);
+        $friend_events = $this->friend->get_events($user_id,'event', $limit);
+        return load_view('profile', 'layout/densealife/friend_events', array('events' => $friend_events));
     }
 
 }

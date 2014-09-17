@@ -14,14 +14,16 @@
     <?php echo $this->comments->form(); ?>
 </div>
 {{else}}
+<div class="status-box status-box-text">
 <section>
     <table align="center">
         <tr>
             <td>{{message}}</td>
-            <td>{{button:follow_event event_id='<?php echo $event->id; ?>'}}</td>
+            <td>{{button:follow_event event_id='<?php echo $event->id; ?>' reload='true'}}</td>
         </tr>
     </table>
 </section>
+    </div>
 {{endif}}
 
-<?php echo $this->comments->display($allow_comment);
+<?php echo $this->comments->display($allow_comment, $blacklisted);

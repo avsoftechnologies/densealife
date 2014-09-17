@@ -73,8 +73,7 @@ class EventsManager extends Public_Controller
 
 
         $this->template
-                ->set_breadcrumb($event->title)
-                ->set('follower_friends', $this->eventsmanager_m->get_follower_friends($event->id));
+                ->set_breadcrumb($event->title);
     }
 
     function index()
@@ -476,6 +475,7 @@ class EventsManager extends Public_Controller
         $this->template
                 ->set('event', $event)
                 ->set('allow_comment', $allow_comment)
+                ->set('blacklisted', $blacklisted)
                 ->set('message', $message)
                 ->build('eventsmanager/wall');
 

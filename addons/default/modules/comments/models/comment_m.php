@@ -376,8 +376,21 @@ class Comment_m extends MY_Model
     
     public function get_comment_by_event($entry_id, $parent_comment_id = 0,  $show_inactive = false)
     {
+        $user_id = $this->current_user->id; 
+        $friend_ids = "SELECT "
+                . "CASE "
+                . "  WHEN "
+                . "      user_id = '" . $user_id . "' THEN friend_id "
+                . "  WHEN "
+                . "      friend_id = '" . $user_id . "' THEN user_id "
+                . "END AS fid"
+                . " FROM default_friend_list"
+                . " WHERE status='accepted' "
+                . " AND (user_id='" . $user_id . "' OR friend_id='" . $user_id . "')";
+        
         $this
                 ->select('comments.*')
+                ->select("if(default_comments.user_id IN ($friend_ids), 1, 0) as is_friend_post", false)
                 ->select('if(e.author = default_comments.user_id, e.title, p.display_name) as display_name', false )
                 ->select('default_comments.created_on as priority')
                 ->join('events as e' , 'e.id = comments.entry_id', 'left')
@@ -385,7 +398,7 @@ class Comment_m extends MY_Model
          if ($parent_comment_id == 0) {
             $this->order_by('comments.created_on', Settings::get('comment_order'));
         }
-        $comments = $this->get_many_by(array('entry_id' => $entry_id, 'is_active' => 1));
+        $comments = $this->get_many_by(array('entry_id' => $entry_id, 'is_active' => 1, 'default_comments.parent_id' => 0));
         
         return $comments;
     }

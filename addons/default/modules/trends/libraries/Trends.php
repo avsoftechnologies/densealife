@@ -500,7 +500,7 @@ class Trends
         return $rs;
     }
 
-    public function get_trending($user_id = null, $type = 'event', $sub_category_id = null, $limit = null)
+    public function get_trending($user_id = null, $type = null, $sub_category_id = null, $limit = null)
     {
         return ci()->trend_m->get_trending_events($user_id, $type, $sub_category_id, $limit);
     }

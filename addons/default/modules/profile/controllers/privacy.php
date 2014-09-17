@@ -8,8 +8,6 @@ class Privacy extends Public_Controller
     public $user;
     public $page_location;
     
-    
-
     public function __construct()
     {
         parent::__construct();
@@ -77,31 +75,6 @@ class Privacy extends Public_Controller
             $this->template
                 ->set_layout(false);
         }
-        // work out the visibility setting
-        switch ( Settings::get('profile_visibility') ) {
-            case 'public':
-                // if it's public then we don't care about anything
-                break ;
-
-            case 'owner':
-                // they have to be logged in so we know if they're the owner
-                $this->current_user or redirect('users/login/users/view/' . $username) ;
-
-                // do we have a match?
-                $this->current_user->username !== $username and redirect('404') ;
-                break ;
-
-            case 'hidden':
-                // if it's hidden then nobody gets it
-                redirect('404') ;
-                break ;
-
-            case 'member':
-                // anybody can see it if they're logged in
-                $this->current_user or redirect('users/login/users/view/' . $username) ;
-                break ;
-        }
-
         // Don't make a 2nd db call if the user profile is the same as the logged in user
         if ( $this->current_user && $username === $this->current_user->username ) {
             $user = $this->current_user ;
@@ -123,6 +96,7 @@ class Privacy extends Public_Controller
     public function create()
     {
         $post   = $this->input->post();
+        
         $params = $this->get_privacy_parameters();
         $data   = array();
         foreach ( $post as $key => $value ) {
@@ -152,7 +126,6 @@ class Privacy extends Public_Controller
                 ->set('_user', $user)
                 ->set('parameters', $privacy_paramenters)
                 ->build('privacy/view');
-        
     }
 
 }

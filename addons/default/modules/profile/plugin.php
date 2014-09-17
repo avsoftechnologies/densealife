@@ -89,23 +89,39 @@ class Plugin_Profile extends Plugin
         }
     }
     
+    /**
+     * renders html block for friend list
+     * @param type $user_id
+     * @return type
+     */
     public function block_friends($user_id = null)
     {
-        $user_id = $this->attribute('user_id', $user_id);
+        $user_id      = $this->attribute('user_id', $user_id);
+        $layout       = $this->attribute('layout', 'user');
         $this->load->model('friend/friend_m');
-        $friends = $this->friend_m->get_friends($user_id);
-        $friend_count  = count($friends); 
-        if($friend_count) {
-            return load_view(
-                'eventsmanager',
-                'layout/user/friend_block',
-                array(
-                    'friends' => $friends,
-                    'count' => $friend_count,
-                    'title' => 'Friends',
-                    'hashValue' => 'friends'
-                )
-            );
+        $friends      = $this->friend_m->get_friends($user_id);
+        $friend_count = count($friends);
+        if ($friend_count) {
+            switch ($layout) {
+                case 'user':
+                    return load_view(
+                            'eventsmanager', 'layout/user/friend_block', array(
+                        'friends'   => $friends,
+                        'count'     => $friend_count,
+                        'title'     => 'Friends',
+                        'hashValue' => 'friends'
+                            )
+                    );
+                case 'densealife':
+                    return load_view(
+                            'profile', 'layout/densealife/friends_block', array(
+                        'friends'   => $friends,
+                        'count'     => $friend_count,
+                        'title'     => 'Friends',
+                        'hashValue' => 'friends'
+                            )
+                    );
+            }
         }
     }
 

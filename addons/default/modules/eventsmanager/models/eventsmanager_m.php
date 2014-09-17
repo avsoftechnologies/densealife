@@ -496,10 +496,10 @@ class EventsManager_m extends MY_Model
      * Get the detail of all the friends who are following the event
      * @param int $event_id 
      */
-    public function get_follower_friends($event_id)
+    public function get_follower_friends($event_id, $limit = 10)
     {
         $this->load->library('friend/friend');
-        return $this->friend->get_follower_friends($event_id, $this->current_user->id);
+        return $this->friend->get_follower_friends($event_id, $this->current_user->id, $limit);
     }
 
     public function save_image_as($id, $input)

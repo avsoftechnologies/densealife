@@ -237,31 +237,35 @@ class Friend_m extends MY_Model
     
     
     /**
-     * fetch the resultset containing 
+     * fetch all the friends following the same event as passed as $event_id
      * @param type $event_id
      * @param type $user_id
      * @return type
      */
     public function get_follower_friends($event_id, $user_id)
     {
-        $query  = $this->query("
-                SELECT distinct P.user_id as user_id,P.display_name as name, username
-                FROM " . $this->db->dbprefix('profiles') . " AS P 
-                INNER JOIN " . $this->db->dbprefix('friend_list') . " AS FL1 
-                ON (FL1.user_id =P.user_id OR FL1.friend_id = P.user_id) 
-                AND (FL1.user_id = $user_id OR FL1.friend_id= $user_id) 
-                AND (FL1.status='accepted')
-                LEFT JOIN " . $this->db->dbprefix('trends') . " AS T
-                ON T.user_id = FL1.user_id OR T.user_id = FL1.friend_id
-                INNER JOIN " . $this->db->dbprefix('users') . " AS u
-                ON u.id = P.user_id
-                WHERE T.follow = 'true'
-                AND T.entry_id = $event_id AND T.entry_type='event'
-                AND P.user_id!={$user_id}
-            ");
-        
-       $rs = $query->result();
-       return $rs; 
+        $friend_ids = "SELECT "
+                . "CASE "
+                . "  WHEN "
+                . "      user_id = '" . $user_id . "' THEN friend_id "
+                . "  WHEN "
+                . "      friend_id = '" . $user_id . "' THEN user_id "
+                . "END AS fid"
+                . " FROM default_friend_list"
+                . " WHERE status='accepted' "
+                . " AND (user_id='" . $user_id . "' OR friend_id='" . $user_id . "')";
+
+        $following_events = "SELECT"
+                . " DISTINCT p.* "
+                . "FROM default_trends as t"
+                . " LEFT JOIN default_profiles as p "
+                . " ON p.user_id = t.user_id"
+                . " WHERE entry_id='" . $event_id . "'"
+                . " AND p.user_id IN (" . $friend_ids . ")"
+                . " AND follow='true'";
+
+        $rs = $this->query($following_events)->result();  
+        return $rs; 
     }
 
     
@@ -281,20 +285,50 @@ class Friend_m extends MY_Model
             $var1 .= "                    SELECT user_id ";
             $var1 .= "                    FROM   default_friend_list ";
             $var1 .= "                    WHERE  friend_id = $user_id ";
-            $var1 .= "                           AND status = 'accepted') ";
+            $var1 .= "                           AND status = 'accepted') "
+                    . " AND u.id != '". $this->current_user->id."'";
             $query  = $this->query($var1); 
             $rs = $query->result();
             return $rs; 
         }
     }
     
+    public function get_friend_recently_followed_entry($user_id, $type = 'event', $limit = 8)
+    {
+        $friend_ids = "SELECT "
+                . "CASE "
+                . "  WHEN "
+                . "      user_id = '" . $user_id . "' THEN friend_id "
+                . "  WHEN "
+                . "      friend_id = '" . $user_id . "' THEN user_id "
+                . "END AS fid"
+                . " FROM default_friend_list"
+                . " WHERE status='accepted' "
+                . " AND (user_id='" . $user_id . "' OR friend_id='" . $user_id . "')";
+        
+        $events = "SELECT DISTINCT E.* "
+                . " FROM default_trends as T"
+                . " INNER JOIN default_events as E ON E.id = T.entry_id "
+                . " WHERE T.user_id IN (".$friend_ids.")"
+                . " AND T.entry_type = '".$type."'"
+                . " AND T.follow = 'true'"
+                . " ORDER BY T.created_on DESC"; 
+        if($limit !='') {
+            $events.= " LIMIT $limit ";
+        }
+        $query  = $this->query($events); 
+        $rs = $query->result();
+        return $rs; 
+
+    }
     /**
      * get_events will be used to fetch all the events followed by the logged in user's friends. 
      * @param type $user_id
      * @param type $limit
      */
-    public function get_events($user_id, $limit)
+    public function get_events($user_id, $limit = null)
     { 
+        $this->get_friend_recently_followed_entry($user_id, 'event', $limit); 
         $friends = $this->get_friends($user_id);
         $friend_ids = array();
         if(!empty($friends)){

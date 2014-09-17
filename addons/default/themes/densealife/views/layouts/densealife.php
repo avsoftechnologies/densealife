@@ -46,20 +46,7 @@
                         {{ theme:partial name="blocks/interests" }}
                         
                     </div>
-                    <?php if(!empty($friends)):?>
-                    <div class="comman-box">
-                        <span class="heading-comman">Friends</span>
-                        <ul class="friends clearfix">
-                            <?php foreach($friends as $friend):?>
-                            <li>
-                                <a href="/user/<?php echo $friend->username;?>" title='<?php echo $friend->display_name;?>'>
-                                    {{user:profile_pic user_id='<?php echo $friend->user_id;?>'}}
-                                </a>
-                            </li>
-                            <?php endforeach;?>
-                        </ul>
-                    </div>
-                    <?php endif;?>
+                    {{profile:block_friends user_id=_user:id layout='densealife'}}
                 </div>
                 <!--End left-body-container--> 
                 <!--Start center-body-container-->
@@ -81,16 +68,7 @@
                             {{ /eventsmanager:trending }}
                         </ul>
                     </div>
-                    <div class="comman-box">
-                        <span class="heading-comman">Friends Events</span>
-                        <ul class="friends clearfix">
-                            {{friend:events user_id="<?php echo $user->id;?>"}}
-                           <li>
-                                <a href="{{ url:site uri='eventsmanager/{{slug}}' }}" title="{{ title }}" >{{ eventsmanager:thumb name="{{ thumbnail }}" }}</a>
-                            </li>
-                            {{/friend:events}}
-                        </ul>
-                    </div>
+                    {{friend:events user_id='<?php echo $user->id;?>' limit='8' }}
                     {{theme:partial name="blocks/stream"}}
                 </div>
                 <!--End Right-body-container--> 

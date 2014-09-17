@@ -137,23 +137,22 @@ class Comments
      *
      * @return	string	Returns the HTML for any existing comments
      */
-    public function display($allow_comment = true)
+    public function display($allow_comment = true, $blacklisted = false)
     {
-        echo $this->entry_id; 
         // Fetch comments, then process them
         $comments = $this->process(ci()->comment_m->get_comment_by_event($this->entry_id));
         // Return the awesome comments view
-        return $this->load_view('display_my_comments', compact(array('comments')) + array('allowcomment' => $allow_comment));
+        return $this->load_view('display_my_comments', compact(array('comments')) + array('allowcomment' => $allow_comment, 'blacklisted' => $blacklisted));
     }
 
-    public function display_my_comments($user = null, $allow_comment = true)
+    public function display_my_comments($user = null, $allow_comment = true, $blacklisted = false)
     {
         $user_id  = !isset($user->id) ? ci()->current_user->id : $user->id;
         ci()->load->library('trends/trends');
         // Fetch comments, then process them
         $comments = $this->process(ci()->comment_m->get_by_user($user_id));
         // Return the awesome comments view
-        return $this->load_view('display_my_comments', compact(array('comments')) + array('allowcomment' => $allow_comment));
+        return $this->load_view('display_my_comments', compact(array('comments')) + array('allowcomment' => $allow_comment,'blacklisted' => $blacklisted));
     }
 
     public function display_children($parent_id = null)

@@ -44,9 +44,7 @@ class Privacy_m extends MY_Model
     
     public function seek_permission($user_id, $type)
     {
-        $logged_in_user = $this->current_user->id; 
         $settings = $this->get_settings($user_id);
-        
         $granted = true;
         foreach ( $settings as $setting ) {
             

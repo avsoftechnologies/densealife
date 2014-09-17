@@ -162,20 +162,18 @@ class Trend_m extends MY_Model
         return $this->select($select)->get_by($array);
     }
 
-    public function get_trending_events($user_id = null, $type = 'event', $sub_cat_id = null, $limit = null)
+    public function get_trending_events($user_id = null, $type = 'null', $sub_cat_id = null, $limit = null)
     {
-        if ($type == 'interest') {
-            $cat         = $this->event_categories_m->get_by('slug', 'interest');
-            $category_id = $cat->id;
-        } else {
-            $cat         = $this->event_categories_m->get_by('slug', 'event');
+        $category_id = null;
+        if ($type != '') {
+            $cat         = $this->event_categories_m->get_by('slug', $type);
             $category_id = $cat->id;
         }
-        
+
         $this->db->select('E.id as entry_id, E.*,C.created_on , count(*) as counter')
                 ->from('events as E')
                 ->join('comments as C', 'E.id = C.entry_id', 'left')
-                ->where('(C.created_on BETWEEN DATE_SUB(C.created_on , INTERVAL 5 day) and NOW())');
+                ->where('(C.created_on BETWEEN DATE_SUB(C.created_on , INTERVAL 50 day) and NOW())');
         if ($user_id != '') {
             $this->db->where('C.user_id', $user_id);
         }
@@ -183,7 +181,9 @@ class Trend_m extends MY_Model
         if ($sub_cat_id != '') {
             $this->db->where('sub_category_id', $sub_cat_id);
         }
-        $this->db->where('E.category_id', $category_id);
+        if ($category_id != '') {
+            $this->db->where('E.category_id', $category_id);
+        }
         $this->db->where('E.published', 1);
         $this->db->group_by('C.entry_id')
                 ->order_by('C.created_on', 'DESC');

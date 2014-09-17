@@ -90,7 +90,7 @@
                         <span class="heading-comman">Information</span>
                         <p><?php echo $event->about ? $event->about : ''; ?></p>
                     </div>
-                    {{button:follow_event event_id='<?php echo $event->id; ?>'}}
+                    {{button:follow_event event_id='<?php echo $event->id; ?>' reload='true'}}
                     {{button:favorite_event event_id='<?php echo $event->id; ?>'}}
                     <div>
                         <span>
@@ -162,21 +162,7 @@
 
                     <button class="btn-color common add_friend">Add Friend</button>
                     <button class="common invite_by_mail">Invite by Mail</button>
-
-                    <?php if (!empty($follower_friends)): ?>
-                        <div class="comman-box clearfix clear">
-                            <span class="heading-comman">Friends Following</span>
-                            <ul class="friends-follow">
-                                <?php foreach ($follower_friends as $follower): ?>
-                                    <li>
-                                        <a href="" title="<?php echo $follower->name; ?>">
-                                            {{user:profile_pic user_id='<?php echo $follower->user_id; ?>'}}
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
+                    {{eventsmanager:event_follower_friends entry_id=event:id limit='6'}}
                     <div class="fl activity-feeds"> 
                         {{friend:list_friends}}
                         <span class="heading">Friends Suggestions</span>
