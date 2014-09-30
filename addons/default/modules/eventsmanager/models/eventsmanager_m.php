@@ -24,7 +24,8 @@ class EventsManager_m extends MY_Model
     public function get_all_events($user_id = null, $entry_type = 'event', $limit = null)
     {
         $this->db->select()
-                ->from($this->_table . ' as e');
+                ->from($this->_table . ' as e')
+                ->where('e.published', 1);
         if (!empty($user_id)) {
             //->join('trends as t', 'e.id = t.entry_id', 'right')
             $this->db->where('e.author', $user_id);
@@ -50,7 +51,7 @@ class EventsManager_m extends MY_Model
 //                ->order_by('favorite_count', 'DESC')
 //                ->get()
 //                ->result();
-
+        shuffle($rs);
         return $rs;
     }
 
@@ -144,7 +145,7 @@ class EventsManager_m extends MY_Model
             'end_date'           => (!empty($end_datetime) && is_object($end_datetime)) ? $end_datetime->format('Y-m-d H:i:s') : '0000-00-00 00:00:00',
             'end_date_defined'   => $input['end_date_defined'],
             'enable_comments'    => $input['enable_comments'],
-            'published'          => isset($input['published']) ? $input['published'] : 1,
+            'published'          => 0,
             'youtube_videos'     => isset($input['youtube_videos']) ? serialize($input['youtube_videos']) : null,
             'comment_permission' => isset($input['comment_permission']) ? $input['comment_permission'] : 'CREATER',
             'comment_approval'   => isset($input['comment_approval']) ? $input['comment_approval'] : 'NO'

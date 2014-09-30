@@ -12,7 +12,16 @@
             {{ theme:image file="notification.png" alt="Notification" class="notification-block"}}
             <span class="notification-call other-notification-count d-none"></span>
         </li>
-        <li title="My Account">{{ theme:image file="myaccount.png" alt="My Account" }}</li>
+        <li title="My Account">
+            {{ theme:image file="myaccount.png" alt="My Account" class="account-block"}}
+             <div class="d-none my-account-li">
+                <ul>
+                    <li>Logout</li>
+                    <li>My Account</li>
+                    <li>Privacy Setting</li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </div>
 </header>

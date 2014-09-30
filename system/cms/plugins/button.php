@@ -127,7 +127,7 @@ class Plugin_Button extends Plugin
             $friendship->status       = 'unknown';
             $friendship->sender       = $current_user_id;
             $friendship->receiver     = $user_id;
-            $friendship->status_label = $this->_get_button_label();
+            $friendship->status_label = $this->_get_button_label($friendship);
         }
         //p($friendship);
         return $this->_button($friendship);

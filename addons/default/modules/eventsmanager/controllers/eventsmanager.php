@@ -33,6 +33,7 @@ class EventsManager extends Public_Controller
                 //var currenturl = '" . current_url() . "';
             </script>"
         );
+        
         $this->template->set_layout('event');
         if ($this->input->is_ajax_request()) {
             $this->template->set_layout(false);
@@ -49,10 +50,14 @@ class EventsManager extends Public_Controller
 
     private function _set_template_content($slug = null)
     {
+        
         $this->load->model('users/album_m');
-        $slug or show_404();
 
         $event                      = $this->eventsmanager_m->getBy('slug', $slug) or show_404();
+        if($event->published==0 && $this->current_user->id != $event->author){
+            show_404(); 
+        }
+        
         // Get the author
         $event->author_display_name = $this->profile_m->get_profile(array('user_id' => $event->author))->display_name;
         // Get the picture filename
@@ -70,7 +75,6 @@ class EventsManager extends Public_Controller
 
         $this->_load_comments($event->id);
         $this->_load_trends($event->id);
-
 
         $this->template
                 ->set_breadcrumb($event->title);
@@ -465,11 +469,16 @@ class EventsManager extends Public_Controller
         } else {
             if($blacklisted) {
               $message = 'You have been blocked by the creator of event <b class="txt-up">' . $event->title. '</b>';
-            } else if(!$this->trend_m->am_i_following($event->id)){
+            } elseif(!$this->trend_m->am_i_following($event->id)){
                 $message = 'Follow the event <b class="txt-up">'. $event->title. '</b> to get updates, post and comment';
             } else {
                 $allow_comment = true;
             }
+        }
+       
+        if($event->post_permission=='CREATER'){
+            $message = 'You are not allowed to post on <b class="txt-up">'. $event->title. '</b> ';
+            $allow_comment = false; 
         }
         
         $this->template

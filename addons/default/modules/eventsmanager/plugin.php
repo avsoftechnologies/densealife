@@ -81,6 +81,7 @@ class Plugin_Eventsmanager extends Plugin
 
     public function upcoming()
     {
+        
         $limit      = $this->attribute('limit', null);
         $user       = $this->attribute('user', null);
         $type       = $this->attribute('type', 'event');
@@ -92,7 +93,8 @@ class Plugin_Eventsmanager extends Plugin
         // load the eventsmanager module's model
         class_exists('Eventsmanager_m') OR $this->load->model('eventsmanager/eventsmanager_m');
         // retrieve the records using the blog module's model
-        return $this->eventsmanager_m->get_upcoming($user_id, $type, $sub_cat_id, $limit);
+        $upcoming = $this->eventsmanager_m->get_upcoming($user_id, $type, $sub_cat_id, $limit);
+        return $upcoming;
     }
 
     public function thumb()

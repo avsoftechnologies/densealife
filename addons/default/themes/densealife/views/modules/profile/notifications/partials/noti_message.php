@@ -4,7 +4,7 @@
     </a>
 </span>
 <span class="center-text">
-    <span class="w400 fl">
+    <span class="fl">
         <strong>{{data:sender}}</strong> {{ helper:lang line="profile:message_received" }}
     </span>
 </span>

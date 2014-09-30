@@ -8,7 +8,7 @@
         </div>
         <div class="post_title">
             <span class="display_name"><?php echo $item->display_name; ?> </span>
-            <?php if($item->entry_title!=''):?>
+            <?php if($this->router->fetch_method()!='wall' && $item->entry_title!=''):?>
             &nbsp; &gtdot; <?=anchor($item->uri, $item->entry_title, array('class' => 'f-bold'))?>
             <?php endif;?>
 <!--            <span class="color-blue"> &nbsp; shared  <?php echo $item->display_name; ?>'s status</span>-->

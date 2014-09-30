@@ -2,7 +2,7 @@
         {{user:profile_pic user_id='{{data:sender_id}}'}}
 </span>
 <span class="center-text">
-    <span class="w400 fl">
+    <span class="fl">
         <strong>{{data:sender}}</strong> {{ helper:lang line="profile:started_following" }}
     </span>
 </span>
