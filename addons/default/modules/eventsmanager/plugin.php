@@ -79,13 +79,13 @@ class Plugin_Eventsmanager extends Plugin
         return count($favorites);
     }
 
-    public function upcoming()
+    public function upcoming($limit = null, $user = null, $type = 'event', $sub_cat_id = null)
     {
         
-        $limit      = $this->attribute('limit', null);
-        $user       = $this->attribute('user', null);
-        $type       = $this->attribute('type', 'event');
-        $sub_cat_id = $this->attribute('sub_cat_id', null);
+        $limit      = $this->attribute('limit', $limit);
+        $user       = $this->attribute('user', $user);
+        $type       = $this->attribute('type', $type);
+        $sub_cat_id = $this->attribute('sub_cat_id', $sub_cat_id);
         $user_id    = null;
         if (is_logged_in() && !is_null($user)) {
             $user_id = !isset($user->id) ? ci()->current_user->id : $user->id;
@@ -95,6 +95,15 @@ class Plugin_Eventsmanager extends Plugin
         // retrieve the records using the blog module's model
         $upcoming = $this->eventsmanager_m->get_upcoming($user_id, $type, $sub_cat_id, $limit);
         return $upcoming;
+    }
+    
+    public function slider()
+    {
+        $call = $this->attribute('call', 'upcoming');
+        $limit = $this->attribute('limit', 10);
+        $records = $this->$call($limit);
+        
+        return load_partial('content/slider', compact('records'));
     }
 
     public function thumb()
