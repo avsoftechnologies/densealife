@@ -130,7 +130,8 @@ class Comment_m extends MY_Model
                 ->where('c.is_active', 1);
         
         if($this->router->fetch_module() == 'users') {
-            $this->db->having('author != `user_id`');
+         $this->db->having('author != `user_id`');
+         $this->db->where("e.author='".$this->current_user->id."' or c.user_id ='".$this->current_user->id."'");
         }
         if ($parent_id == 0) {
             $this->db->order_by('priority','DESC');
@@ -142,6 +143,7 @@ class Comment_m extends MY_Model
             $this->db->limit($limit, $offset);
         }
         $result_set = $this->get_all();
+        //echo $this->last_query();
         return $result_set;
     }
 

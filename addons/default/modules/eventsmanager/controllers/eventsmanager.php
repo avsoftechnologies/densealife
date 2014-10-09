@@ -53,7 +53,8 @@ class EventsManager extends Public_Controller
         
         $this->load->model('users/album_m');
 
-        $event                      = $this->eventsmanager_m->getBy('slug', $slug) or show_404();
+        $event                      = $this->eventsmanager_m->getBy('slug', $slug);
+        
         if($event->published==0 && $this->current_user->id != $event->author){
             show_404(); 
         }
@@ -153,6 +154,9 @@ class EventsManager extends Public_Controller
     public function edit($slug)
     {
         $event              = $this->eventsmanager_m->getBy('slug', $slug);
+        if($event->author != $this->current_user->id){
+            show_404();
+        }
         $type               = 'event';
         if ($event->category_id == 2) {
             $type = 'interest';
@@ -162,7 +166,9 @@ class EventsManager extends Public_Controller
 
     public function create($type = 'event', $slug = null, $action = 'create')
     {
-        
+        if(!empty($_GET['flush'])){
+            $this->session->set_userdata('recently_created_event', '');
+        }
         $this->template->set_layout('densealife')->set('type', $type);
 
         $this->form_validation->set_rules(Events_Validation::rules());
@@ -264,7 +270,7 @@ class EventsManager extends Public_Controller
     }
 
     public function save_cp_pos()
-    {
+    { 
         role_or_die('eventsmanager', 'frontend_editing', 'eventsmanager', lang('eventsmanager:notallowed_frontend_editing'));
         if ($this->input->post('event_id') == '' || $this->input->post('new_cp_pos') == '') {
             show_error('There is some error');
@@ -474,12 +480,13 @@ class EventsManager extends Public_Controller
             } else {
                 $allow_comment = true;
             }
+            
+            if($event->post_permission=='CREATER'){
+                $message = '';
+                $allow_comment = false; 
+            }
         }
        
-        if($event->post_permission=='CREATER'){
-            $message = 'You are not allowed to post on <b class="txt-up">'. $event->title. '</b> ';
-            $allow_comment = false; 
-        }
         
         $this->template
                 ->set('event', $event)

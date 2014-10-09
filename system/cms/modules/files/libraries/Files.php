@@ -158,6 +158,8 @@ class Files
                 ->where('by_user', $by_user);
         if($event_id!=''){
             ci()->file_folders_m->where('event_id', $event_id);
+        } else{
+            ci()->file_folders_m->where('event_id!=','');
         }
         
         if($user_id!=''){

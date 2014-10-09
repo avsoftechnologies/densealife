@@ -1,7 +1,6 @@
 <?php
 $module_path = BASE_URL . $this->module_details['path'];
 ?>
-
 <section class="title">
     <?php if ($this->method == 'create'): ?>
         <h4><?php echo lang('eventsmanager:new_event_label'); ?></h4>

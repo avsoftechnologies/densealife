@@ -366,7 +366,6 @@ class Admin extends Admin_Controller
     public function delete($id = null)
     {
         $id_array = array();
-
         // Multiple or single selection ?
         if ($_POST)
             $id_array    = $_POST['action_to'];
@@ -384,7 +383,13 @@ class Admin extends Admin_Controller
                     $this->session->set_flashdata('error', lang('eventsmanager:exists_error'));
                     redirect('admin/eventsmanager');
                 } else {
-                    $this->eventsmanager_m->delete($id);
+                    if ($this->input->post('btnAction') == 'delete') {
+                        $this->session->set_flashdata('error', 'Event/Interest deleted');
+                        $this->eventsmanager_m->delete($id);
+                    } elseif ($this->input->post('btnAction') == 'publish') {
+                        $this->session->set_flashdata('error', 'Event/Interest published on the front end');
+                        $this->db->update('events', array('published' => 1, 'published_at' => date('Y-m-d H:i:s')), array('id' => $id));
+                    }
                 }
             }
             redirect('admin/eventsmanager');

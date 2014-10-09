@@ -91,11 +91,12 @@ class Public_Controller extends MY_Controller
 		// Nope, just use the default layout
 		elseif ($this->template->layout_exists('default.html'))
 		{
-                    if(is_logged_in()){
-                        $this->template->set_layout('after-login.html');
-                    }else{
-			$this->template->set_layout('default.html');
-                    }
+                    $this->template->set_layout('default.html');
+//                    if(is_logged_in()){
+//                        $this->template->set_layout('after-login.html');
+//                    }else{
+//			$this->template->set_layout('default.html');
+//                    }
 		}
 
 		// Make sure whatever page the user loads it by, its telling search robots the correct formatted URL

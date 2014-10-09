@@ -54,7 +54,6 @@ class Index extends Public_Controller
 
     public function events($type = 'event', $sub_cat_slug = null)
     {
-
         if ($type == 'interest') {
             $cat       = $this->event_categories_m->get_by('slug', 'interest');
             $parent_id = $cat->id;

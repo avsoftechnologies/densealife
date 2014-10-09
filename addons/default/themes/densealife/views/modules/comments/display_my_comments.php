@@ -1,4 +1,4 @@
-<?php if ($comments): ?>  
+<?php if ($comments):  ?>  
     <ul class="status-blog">
         <?php foreach ($comments as $item): ?>
             <li class='li-<?php echo $item->id; ?>'>

@@ -43,9 +43,11 @@
                 <div class="left-body-container">
                     {{ theme:partial name="content" }}
                 </div>
+                {{if user:not_logged_in}}
                 <div class="right-body-container">
                     {{theme:partial name="right"}}
                 </div>
+                {{endif}}
             </div>            
             <footer> 
                 {{ theme:partial name="footer" }}    

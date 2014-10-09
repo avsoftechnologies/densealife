@@ -15,6 +15,7 @@
 </div>
 {{else}}
 <div class="status-box status-box-text">
+<?php if($message!=''):?>
 <section>
     <table align="center">
         <tr>
@@ -23,6 +24,7 @@
         </tr>
     </table>
 </section>
+<?php endif;?>
     </div>
 {{endif}}
 

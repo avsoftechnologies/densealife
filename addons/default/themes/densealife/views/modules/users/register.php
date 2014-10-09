@@ -54,7 +54,8 @@
         <?php echo $captcha['input'] ?>
        
         <div class="button-cover">
-            <button class="btn-color" id="submit-btn" type="submit">Submit</button>
+            By clicking Sign Up, you agree to our {{ url:anchor segments="/terms-and-conditions" title="Terms and Condition" class="block"}}
+            <button class="btn-color" id="submit-btn" type="submit">Sign Up</button>
             <button id="sign-btn">Reset</button></div>
     <?php echo form_close() ?>
 </div>

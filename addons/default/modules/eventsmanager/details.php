@@ -34,6 +34,10 @@ class Module_EventsManager extends Module
                         )
                     )
                 ),
+                'pending_events_list' => array(
+                    'name'      => 'Pending Event List',
+                    'uri'       => 'admin/eventsmanager/approve',
+                ),
                 'categories'  => array(
                     'name'      => 'cat:list_title',
                     'uri'       => 'admin/eventsmanager/categories',

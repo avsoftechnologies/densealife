@@ -1,5 +1,5 @@
 <?php if ($images): $rand = rand_string(10); ?>
-    <ul style='width:840px;'>
+    <ul style='width:840px;' class="album_images">
         <?php foreach ($images as $image): ?>
             <li style="float:left;" class="photos">
                 <div class="txt-center">
@@ -19,8 +19,13 @@
     <?php
  endif;
  ?>
-<script type="text/javascript">
-$('body').on('mouseover','li.photos', function(){
-   $(this).children('.action').removeClass('d-none'); 
-});
+
+<script>
+    $('body').on('mouseover', '.album_images .photos', function() {
+        $(this).children('.action').removeClass('d-none');
+    });
+
+    $('body').on('mouseout', '.album_images .photos', function() {
+        $(this).children('.action').addClass('d-none');
+    });
 </script>

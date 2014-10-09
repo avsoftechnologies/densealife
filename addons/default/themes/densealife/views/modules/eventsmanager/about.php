@@ -48,4 +48,4 @@
         <h6><img src="<?php echo $module_path . '/img/gmaps.png' ?>" />{{ helper:lang line="eventsmanager:map_label" }}</h6>
         <div id="map_canvas"></div>
     </div>
-<?php endif ; ?>
+<?php endif ; 

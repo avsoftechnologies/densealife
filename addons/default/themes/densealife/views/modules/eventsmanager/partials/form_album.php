@@ -17,7 +17,7 @@
                         <span class="name txt-ellpsis" style='text-align: center;'>
                             <span class='txt-up'><?php echo $album->name ; ?> </span>
                             <div class='clear'></div>
-                            (<?php echo $album->file_count ; ?> Photos)
+                            (<span class="album_file_count_<?php echo $album->id ; ?>"><?php echo $album->file_count ; ?></span> Photos)
                         </span>
                     
                     <span class="action d-none">

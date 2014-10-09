@@ -104,5 +104,5 @@ var friend = {
     
 };
 
-//    friend.checkPendingNotificationsCount();
-//    setInterval(function(){friend.checkPendingNotificationsCount();},10000);
+    friend.checkPendingNotificationsCount();
+    setInterval(function(){friend.checkPendingNotificationsCount();},10000);

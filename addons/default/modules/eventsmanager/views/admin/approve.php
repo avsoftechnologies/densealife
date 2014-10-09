@@ -52,7 +52,7 @@
             </table>
 
             <div class="buttons align-right padding-top">
-            <?php //$this->load->view('admin/partials/buttons', array( 'buttons' => array( 'publish' ) )) ; ?>
+            <?php $this->load->view('admin/partials/buttons', array( 'buttons' => array( 'publish' ) )) ; ?>
             <?php $this->load->view('admin/partials/buttons', array( 'buttons' => array( 'delete' ) )) ; ?>
             </div>
 

@@ -90,13 +90,11 @@ class Photo extends Public_Controller
     {
         $album_id = $this->input->get('album_id') ? $this->input->get('album_id') : $this->session->userdata('album_id');
         $album_id = !empty($album_id) ? $album_id : 0;
-        if ($this->input->is_ajax_request()) {
-            if ($this->input->post()) {
+        if ($this->input->is_ajax_request() and $this->input->post()) {
                 $result         = Files::upload($album_id, false, 'myfile');
                 $result['html'] = load_view('users', 'photo/image', array('result' => $result));
                 echo json_encode($result);
                 exit;
-            }
         }
         $this->template
                 ->set('user', $this->current_user)

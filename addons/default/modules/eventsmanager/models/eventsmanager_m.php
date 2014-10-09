@@ -23,35 +23,16 @@ class EventsManager_m extends MY_Model
 
     public function get_all_events($user_id = null, $entry_type = 'event', $limit = null)
     {
-        $this->db->select()
-                ->from($this->_table . ' as e')
-                ->where('e.published', 1);
-        if (!empty($user_id)) {
-            //->join('trends as t', 'e.id = t.entry_id', 'right')
-            $this->db->where('e.author', $user_id);
+        $cat_id              = $this->get_entry_category_id_by_slug($entry_type);
+        $condition = array('category_id' => $cat_id, 'published' => 1);
+        if($user_id!='') {
+            $condition['author'] = $user_id; 
         }
-        if ($entry_type == 'event') {
-            $this->db->where('category_id', '1');
-        } else {
-            $this->db->where('category_id', '2');
+        $return  = $this; 
+        if($limit!='') {
+            $return->limit($limit);
         }
-
-        //->where('t.entry_type', $entry_type);
-//        if ( $user_id != '' ) {
-//            $this->db->where('t.user_id', $user_id);
-//        }
-
-        if ($limit != '') {
-            $this->db->limit($limit);
-        }
-        $rs = $this->db->order_by('id', 'DESC')->get()
-                ->result();
-//        $rs = $this->db->order_by('star_count', 'DESC')
-//                ->order_by('follow_count', 'DESC')
-//                ->order_by('favorite_count', 'DESC')
-//                ->get()
-//                ->result();
-        shuffle($rs);
+        $rs = $return->get_many_by($condition);
         return $rs;
     }
 
@@ -147,8 +128,8 @@ class EventsManager_m extends MY_Model
             'enable_comments'    => $input['enable_comments'],
             'published'          => 0,
             'youtube_videos'     => isset($input['youtube_videos']) ? serialize($input['youtube_videos']) : null,
-            'comment_permission' => isset($input['comment_permission']) ? $input['comment_permission'] : 'CREATER',
-            'comment_approval'   => isset($input['comment_approval']) ? $input['comment_approval'] : 'NO'
+            'post_permission' => isset($input['comment_permission']) ? $input['comment_permission'] : 'CREATER',
+            'post_approval'   => isset($input['comment_approval']) ? $input['comment_approval'] : 'NO'
         );
 
         if (isset($input['cover_photo'])) {
@@ -369,8 +350,11 @@ class EventsManager_m extends MY_Model
     public function update($id, $input, $skip_validation = false)
     {
         $array  = $this->_process($input);
+        $array['published'] = 1;
+        $result = false; 
         // Update all except author
         $result = parent::update($id, $array);
+        
         
         // Doing this work after for PHP < 5.3
         //$result = $this->save_thumbnail($id, $input);
@@ -388,7 +372,7 @@ class EventsManager_m extends MY_Model
                 $result = parent::update($id, array('pos_lat' => $input['pos_lat'], 'pos_lng' => $input['pos_lng']));
             }
         }
-        return $result;
+        return true;
     }
 
     public function get_files($type = 'i', $folder_id = null)
@@ -520,6 +504,11 @@ class EventsManager_m extends MY_Model
         return parent::update($id, array('cover_photo_pos' => str_replace('px', '', $input['new_cp_pos'])));
     }
 
+    public function get_my_entry($user_id, $entry_type='event')
+    {
+        $cat_id              = $this->get_entry_category_id_by_slug($entry_type);
+        $this->get_all_events($user_id, $entry_type);
+    }
     /**
      * To fetch all the entry under category event or slug
      * @param int $user_id
