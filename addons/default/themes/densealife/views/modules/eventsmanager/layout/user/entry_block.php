@@ -4,7 +4,7 @@
         <?php foreach ($items as $item) : ?>
             <li>
                 <span><?php echo $item->title; ?></span>
-                <a href='/eventsmanager/about/<?php echo $item->slug; ?>' title='<?php echo $item->title; ?>'>
+                <a href='/eventsmanager/<?php echo $item->slug; ?>' title='<?php echo $item->title; ?>'>
                     {{eventsmanager:thumb name='<?php echo $item->thumbnail; ?>'}}
                 </a>
             </li>

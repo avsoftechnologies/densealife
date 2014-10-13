@@ -573,7 +573,7 @@ class EventsManager_m extends MY_Model
                 ->get_many_by(
                         array(
                                 't.user_id' => $user_id,
-                                't.follow' => 'true',
+                                't.favorite' => 'true',
                         )
                 );
         return $favorite_entry;

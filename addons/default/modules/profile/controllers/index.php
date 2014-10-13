@@ -48,8 +48,8 @@ class Index extends Public_Controller
     public function index()
     {
         $this->template
-                ->set('content', load_view('profile', 'index/activity', array('user' => $this->user)))
-                ->build('index/index');
+                ->set('user', $this->user)
+                ->build('index/activity');
     }
 
     public function events($type = 'event', $sub_cat_slug = null)

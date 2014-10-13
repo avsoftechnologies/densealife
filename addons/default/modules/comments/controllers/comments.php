@@ -591,12 +591,16 @@ class Comments extends Public_Controller
    public function delete()
    {
        if ($this->input->is_ajax_request()) {
-            $post = $this->comment_m->get_by('id', $this->input->post('id'));
-            if (!empty($post) and $post->user_id == $this->current_user->id) {
-                if ($this->comment_m->soft_delete($this->input->post('id'))) {
+           $comment_id = $this->input->post('id');
+           $d = $this->comment_m->get_comment_details($comment_id);
+            if (($d->post_author_id == $this->current_user->id or $d->event_author_id == $this->current_user->id)) {
+                if ($this->comment_m->soft_delete($comment_id)) {
                     $this->template
                             ->build_json(array('status' => 'success', 'msg' => 'Post deleted successfully'));
                 }
+            } else{
+                $this->template
+                            ->build_json(array('status' => 'failure', 'msg' => 'You are not authorized to delete the post.'));
             }
         } else {
             redirect('/densealife-page');

@@ -116,12 +116,14 @@ class Comment_m extends MY_Model
         $this->db->join('profiles as p1', 'p1.user_id = s.user_id', 'left');
         $this->db->join('events as e', 'e.id = c.entry_id', 'left');
         $where = "(c.user_id = $user_id)";
+        //Bug#167:resolved
         if(!empty($friends_ids)){
-            $where = "(s.user_id IN (". implode(',',$friends_ids).") OR c.user_id IN (". implode(',',$friends_ids).") OR s.user_id =".$user_id." OR c.user_id =".$user_id.")";
+            $where = "(s.user_id IN (". implode(',',$friends_ids).") OR c.user_id IN (". implode(',',$friends_ids).") OR s.user_id =".$user_id." OR c.user_id =".$user_id.") ";
             $sharedIncluded = true; 
         }
+        
         if(!empty($following_entry_ids) and $parent_id ==0) {
-            $where.="OR (c.entry_id IN(".implode(',', $following_entry_ids).") )";
+            $where.="AND (c.entry_id IN(".implode(',', $following_entry_ids).") )";
         }
         
         $this->db
@@ -392,6 +394,7 @@ class Comment_m extends MY_Model
         
         $this
                 ->select('comments.*')
+                ->select('e.author as event_author_id')
                 ->select("if(default_comments.user_id IN ($friend_ids), 1, 0) as is_friend_post", false)
                 ->select('if(e.author = default_comments.user_id, e.title, p.display_name) as display_name', false )
                 ->select('default_comments.created_on as priority')
@@ -403,5 +406,14 @@ class Comment_m extends MY_Model
         $comments = $this->get_many_by(array('entry_id' => $entry_id, 'is_active' => 1, 'default_comments.parent_id' => 0));
         
         return $comments;
+    }
+    
+    public function get_comment_details($comment_id)
+    {
+        return $this
+                ->select('e.author as event_author_id, c.user_id as post_author_id', true)
+                ->from('comments as c')
+                ->join('events as e', 'e.id = c.entry_id', 'left')
+                ->get_by(array('c.id' => $comment_id)); 
     }
 }

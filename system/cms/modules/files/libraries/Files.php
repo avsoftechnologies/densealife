@@ -159,7 +159,7 @@ class Files
         if($event_id!=''){
             ci()->file_folders_m->where('event_id', $event_id);
         } else{
-            ci()->file_folders_m->where('event_id!=','');
+            ci()->file_folders_m->where('event_id!=""');
         }
         
         if($user_id!=''){
@@ -176,7 +176,7 @@ class Files
             foreach ( $folders as &$folder ) {
                 $folder->formatted_date = format_date($folder->date_added) ;
 
-                $folder->file_count = ci()->file_m->count_by('folder_id', $folder->id) ;
+                $folder->file_count = ci()->file_m->count_by(array('folder_id' => $folder->id, 'hidden' => 0)) ;
                 
                 $content = ci()->file_m
                                 ->where('folder_id', $folder->id)

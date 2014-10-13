@@ -1,5 +1,5 @@
 <div class="container">
-    <?php if($item->user_id == $this->current_user->id):?>
+    <?php if($item->user_id == $this->current_user->id or (isset($item->event_author_id) and $item->event_author_id == $this->current_user->id)):?>
         <span class="delete_post"><a href="javascript:void(0);" class="post-delete" data-id = '<?php echo $item->id;?>' title="Delete">[x]</a></span>
     <?php endif;?>
     <div class="header">
