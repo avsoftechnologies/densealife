@@ -100,10 +100,12 @@ class Plugin_Eventsmanager extends Plugin
     public function slider()
     {
         $call = $this->attribute('call', 'upcoming');
+        $widget_id = $this->attribute('widget_id', 'mycarousel');
+        $slider_title = $this->attribute('slider_title', 'Recommendation');
         $limit = $this->attribute('limit', 10);
         $records = $this->$call($limit);
         
-        return load_partial('content/slider', compact('records'));
+        return load_partial('content/slider', compact('records') + array('widget_id' => $widget_id, 'slider_title' => $slider_title));
     }
 
     public function thumb()

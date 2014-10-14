@@ -1,7 +1,8 @@
 <?php if (!empty($records)): ?>
-    <div class="events-heading">Upcoming</div>
+<div class="comman-heading"><?php echo $slider_title;?> <button>View All</button></div>
+    <!--<div class="events-heading"><?php echo $slider_title;?></div>-->
     <div class="event-slot-aera clearfix">
-        <ul id="mycarousel" class="jcarousel-skin-tango">
+        <ul id="<?php echo $widget_id;?>" class="jcarousel-skin-tango">
             <?php foreach ($records as $record): ?>
                 <li>
                     <div class="event-slot-image">

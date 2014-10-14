@@ -36,104 +36,18 @@
 <!--Start center-body-container-->
 <div class="homepage-bodyinnre-container">
     <div class="comman-box clearfix">
-        <div class="comman-heading">Recommended <button>View All</button></div>
-        <ul id="mycarouselOne" class="jcarousel-skin-tango stream">
-            {{ eventsmanager:get_all_events}}
-            <li>
-                {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
-                <h2>{{ title }}</h2>
-                <span class="cat block">Festival</span>
-                <div class="comman-width">
-                    <a href="" class="float-right">
-                        {{ follow_count }} <span class="float-right-color">Followers</span>
-                    </a>
-                </div>
-                <span class="block new-star">
-                    <a href="" class="stars comman-star">{{ star_count }}</a>
-                </span>
-            </li>
-            {{ /eventsmanager:get_all_events }}
-        </ul>
+        {{eventsmanager:slider call="upcoming" limit="8" slider_title='Upcoming' widget_id='mycarouselOne'}}
     </div>
     <div class="comman-box clearfix">
-        <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
-        <ul id="mycarouselTwo" class="jcarousel-skin-tango stream">
-            {{ eventsmanager:get_all_events}}
-            <li>
-                {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
-                <h2>{{ title }}</h2>
-                <span class="cat block">Festival</span>
-                <div class="comman-width">
-                    <a href="" class="float-right">
-                        {{ follow_count }} <span class="float-right-color">Followers</span>
-                    </a>
-                </div>
-                <span class="block new-star">
-                    <a href="" class="stars comman-star">{{ star_count }}</a>
-                </span>
-            </li>
-            {{ /eventsmanager:get_all_events }}
-
-        </ul>
+        {{eventsmanager:slider call="upcoming" limit="8" slider_title='Upcoming' widget_id='mycarouselTwo'}}
     </div>
     <div class="comman-box clearfix">
-        <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
-        <ul id="mycarouselThree" class="jcarousel-skin-tango stream">
-            {{ eventsmanager:get_all_events}}
-            <li>
-                {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
-                <h2>{{ title }}</h2>
-                <span class="cat block">Festival</span>
-                <div class="comman-width">
-                    <a href="" class="float-right">
-                        {{ follow_count }} <span class="float-right-color">Followers</span>
-                    </a>
-                </div>
-                <span class="block new-star">
-                    <a href="" class="stars comman-star">{{ star_count }}</a>
-                </span>
-            </li>
-            {{ /eventsmanager:get_all_events }}
-        </ul>
+        {{eventsmanager:slider call="upcoming" limit="8" slider_title='Upcoming' widget_id='mycarouselThree'}}
     </div>
     <div class="comman-box clearfix">
-        <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
-        <ul id="mycarouselFour" class="jcarousel-skin-tango stream">
-            {{ eventsmanager:get_all_events}}
-            <li>
-                {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
-                <h2>{{ title }}</h2>
-                <span class="cat block">Festival</span>
-                <div class="comman-width">
-                    <a href="" class="float-right">
-                        {{ follow_count }} <span class="float-right-color">Followers</span>
-                    </a>
-                </div>
-                <span class="block new-star">
-                    <a href="" class="stars comman-star">{{ star_count }}</a>
-                </span>
-            </li>
-            {{ /eventsmanager:get_all_events }}
-        </ul>
+        {{eventsmanager:slider call="upcoming" limit="8" slider_title='Upcoming' widget_id='mycarouselFour'}}
     </div>
     <div class="comman-box clearfix">
-        <div class="comman-heading">Popular on Densea Life - India<button>View All</button></div>
-        <ul id="mycarouselFive" class="jcarousel-skin-tango stream">
-            {{ eventsmanager:get_all_events}}
-            <li>
-                {{ eventsmanager:thumb name="{{ thumbnail }}" height='150' width='200'}}
-                <h2>{{ title }}</h2>
-                <span class="cat block">Festival</span>
-                <div class="comman-width">
-                    <a href="" class="float-right">
-                        {{ follow_count }} <span class="float-right-color">Followers</span>
-                    </a>
-                </div>
-                <span class="block new-star">
-                    <a href="" class="stars comman-star">{{ star_count }}</a>
-                </span>
-            </li>
-            {{ /eventsmanager:get_all_events }}
-        </ul>
+        {{eventsmanager:slider call="upcoming" limit="8" slider_title='Upcoming' widget_id='mycarouselFive'}}
     </div>
 </div>

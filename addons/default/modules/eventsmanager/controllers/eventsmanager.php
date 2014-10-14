@@ -178,12 +178,9 @@ class EventsManager extends Public_Controller
         }
         if ($this->form_validation->run()) {
             $post                = $this->input->post();
-            $post['category_id'] = '1';
-            if ($type == 'interest') {
-                $post['category_id'] = '2';
-            }
+            $post['category_id'] = $this->eventsmanager_m->get_entry_category_id_by_slug($type);
             if ($action == 'edit') {
-                if ($this->eventsmanager_m->update($event->id, $this->input->post()) == true) {
+                if ($this->eventsmanager_m->update($event->id, $post) == true) {
                     $this->session->set_userdata('recently_created_event', $event->id);
                     echo json_encode(array('status' => 'success', 'slug' => $this->input->post('slug')));
                     exit;
