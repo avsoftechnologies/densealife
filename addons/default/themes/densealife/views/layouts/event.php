@@ -85,6 +85,7 @@
                     <span class="follower-right f-bold fs14"><?php echo anchor('eventsmanager/wall/' . $event->slug, $event->title); ?></span>
                     <?php if ($event->author == $this->current_user->id): ?>
                         <span class="follower-right"><?php echo anchor('eventsmanager/edit/' . $event->slug, 'Edit'); ?></span>
+                        <span class="follower-right"><a href="#pending_approval">Pending Approval</span>
                     <?php endif; ?>
                     <div class="comman-box">
                         <span class="heading-comman">Information</span>

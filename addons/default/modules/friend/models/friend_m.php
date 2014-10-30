@@ -271,26 +271,22 @@ class Friend_m extends MY_Model
     
     public function get_friends($user_id, $select = "`p`.*, `u`.`username`")
     {
-        if(!is_null($user_id)){
-            $var1    = "";
-            $var1 .= "SELECT {$select} ";
-            $var1 .= "FROM   `default_profiles` AS `p` ";
-            $var1 .= "       INNER JOIN `default_users` AS `u` ";
-            $var1 .= "               ON `p`.`user_id` = `u`.`id` ";
-            $var1 .= "WHERE  `u`.`id` IN (SELECT friend_id ";
-            $var1 .= "                    FROM   default_friend_list ";
-            $var1 .= "                    WHERE  user_id = $user_id ";
-            $var1 .= "                           AND status = 'accepted' ";
-            $var1 .= "                    UNION ";
-            $var1 .= "                    SELECT user_id ";
-            $var1 .= "                    FROM   default_friend_list ";
-            $var1 .= "                    WHERE  friend_id = $user_id ";
-            $var1 .= "                           AND status = 'accepted') "
-                    . " AND u.id != '". $this->current_user->id."'";
-            $query  = $this->query($var1); 
+        $friend_ids = "SELECT "
+                . "CASE "
+                . "  WHEN "
+                . "      user_id = '" . $user_id . "' THEN friend_id "
+                . "  WHEN "
+                . "      friend_id = '" . $user_id . "' THEN user_id "
+                . "END AS fid"
+                . " FROM default_friend_list"
+                . " WHERE status='accepted' "
+                . " AND (user_id='" . $user_id . "' OR friend_id='" . $user_id . "')";
+        
+        $friend_profiles = "SELECT * FROM default_profiles WHERE user_id IN ($friend_ids)";
+        
+            $query  = $this->query($friend_profiles); 
             $rs = $query->result();
             return $rs; 
-        }
     }
     
     public function get_friend_recently_followed_entry($user_id, $type = 'event', $limit = 8)

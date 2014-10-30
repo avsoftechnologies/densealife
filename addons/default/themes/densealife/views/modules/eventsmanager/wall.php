@@ -27,5 +27,4 @@
 <?php endif;?>
     </div>
 {{endif}}
-
 <?php echo $this->comments->display($allow_comment, $blacklisted);

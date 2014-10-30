@@ -144,6 +144,13 @@ class Comments
         // Return the awesome comments view
         return $this->load_view('display_my_comments', compact(array('comments')) + array('allowcomment' => $allow_comment, 'blacklisted' => $blacklisted));
     }
+    
+    public function display_pending()
+    {
+        $comments = $this->process(ci()->comment_m->post_awaiting_approval($this->entry_id));
+        // Return the awesome comments view
+        return $this->load_view('display_my_comments', compact(array('comments')) + array('allowcomment' => false, 'blacklisted' => false));
+    }
 
     public function display_my_comments($user = null, $allow_comment = true, $blacklisted = false)
     {

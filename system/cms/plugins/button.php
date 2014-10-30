@@ -75,7 +75,7 @@ class Plugin_Button extends Plugin
                 if($this->current_user->id == $friendship->sender) {
                     $action.="friend.cancel_request($friendship->receiver)";
                 } else{
-                    
+                    $action.="friend.accept($friendship->sender)";
                 }
                 break;
             
@@ -93,7 +93,7 @@ class Plugin_Button extends Plugin
     
     private function _button($friendship, $click = true, $mouseover = true, $mouseout = true)
     {
-        $button = '<button class="common right btn_add_friend_' . $friendship->receiver . '" ';
+        $button = '<button class="common right btn_add_friend_' . $friendship->sender . '" ';
         if ($click) {
             $button.= 'onclick="' . $this->_onclick($friendship) . '" ';
         }
@@ -129,7 +129,6 @@ class Plugin_Button extends Plugin
             $friendship->receiver     = $user_id;
             $friendship->status_label = $this->_get_button_label($friendship);
         }
-        //p($friendship);
         return $this->_button($friendship);
     }
     

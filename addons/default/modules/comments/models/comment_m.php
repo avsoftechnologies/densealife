@@ -110,42 +110,42 @@ class Comment_m extends MY_Model
         }
         $this->_get_all_setup();
         $sharedIncluded = false;
-        $this->db->select('s.comment as comment_on_share, s.shared_at, p1.display_name as shared_by, e.author');
+        $this->db->select('s.comment as comment_on_share, s.shared_at, e.author');
         $this->db->select("IF(s.shared_at is null, c.created_on,s.shared_at) AS priority", false);
         $this->db->join('shares as s','s.fk_comment_id = c.id', 'left');
-        $this->db->join('profiles as p1', 'p1.user_id = s.user_id', 'left');
         $this->db->join('events as e', 'e.id = c.entry_id', 'left');
-        $where = "(c.user_id = $user_id)";
+        $where = "(c.user_id = $user_id";
+        
         //Bug#167:resolved
         if(!empty($friends_ids)){
-            $where = "(s.user_id IN (". implode(',',$friends_ids).") OR c.user_id IN (". implode(',',$friends_ids).") OR s.user_id =".$user_id." OR c.user_id =".$user_id.") ";
+            $where .= " OR (s.user_id IN (". implode(',',$friends_ids).") OR c.user_id IN (". implode(',',$friends_ids).") OR s.user_id =".$user_id." OR c.user_id =".$user_id.") ";
             $sharedIncluded = true; 
         }
         
         if(!empty($following_entry_ids) and $parent_id ==0) {
-            $where.="AND (c.entry_id IN(".implode(',', $following_entry_ids).") )";
+            $where.=" OR (c.entry_id IN(".implode(',', $following_entry_ids).") )";
         }
         
         $this->db
-                ->where($where)
+                ->where($where. ')')
                 ->where('c.parent_id', $parent_id)
-                ->where('c.is_active', 1);
+                ->where('c.is_active', 1)
+                ->where('c.trashed', false);
         
         if($this->router->fetch_module() == 'users') {
-         $this->db->having('author != `user_id`');
-         $this->db->where("e.author='".$this->current_user->id."' or c.user_id ='".$this->current_user->id."'");
+            $this->db->having('author != `user_id`');
+            $this->db->where("(e.author='".$this->current_user->id."' OR c.user_id ='".$this->current_user->id."')");
         }
         if ($parent_id == 0) {
             $this->db->order_by('priority','DESC');
         }
-        
+        $this->db->group_by('c.id');
         if(!$is_main_post){
             $limit = !is_null($limit)  ? $limit : Comments::LIMIT_POST_COMMENTS;
             $offset = !is_null($offset) ? $offset : 0 ; 
             $this->db->limit($limit, $offset);
         }
         $result_set = $this->get_all();
-        //echo $this->last_query();
         return $result_set;
     }
 
@@ -241,10 +241,11 @@ class Comment_m extends MY_Model
      * @param int $id The ID of the comment to unapprove
      * @return mixed
      */
-    public function unapprove($id)
+    public function decline($id)
     {
-        return parent::update($id, array('is_active' => false));
+        return parent::update($id, array('trashed' => true));
     }
+    
 
     public function get_slugs()
     {
@@ -360,7 +361,8 @@ class Comment_m extends MY_Model
     
     public function soft_delete($post_id)
     {
-        return parent::update($post_id, array('is_active' => 0)); 
+        $this->db->update('comments', array('trashed' => true), array('parent_id' => $post_id));
+        return parent::update($post_id, array('trashed' => true)); 
     }
     
     public function get_by_parent($parent_id, $limit, $offset)
@@ -378,7 +380,7 @@ class Comment_m extends MY_Model
         return $rs; 
     }
     
-    public function get_comment_by_event($entry_id, $parent_comment_id = 0,  $show_inactive = false)
+    public function get_comment_by_event($entry_id, $author_id = null,  $parent_comment_id = 0,  $show_inactive = false, $show_trashed = false)
     {
         $user_id = $this->current_user->id; 
         $friend_ids = "SELECT "
@@ -400,12 +402,35 @@ class Comment_m extends MY_Model
                 ->select('default_comments.created_on as priority')
                 ->join('events as e' , 'e.id = comments.entry_id', 'left')
                 ->join('profiles as p', 'p.user_id = comments.user_id', 'inner');
-         if ($parent_comment_id == 0) {
+        if ($parent_comment_id == 0) {
             $this->order_by('comments.created_on', Settings::get('comment_order'));
         }
-        $comments = $this->get_many_by(array('entry_id' => $entry_id, 'is_active' => 1, 'default_comments.parent_id' => 0));
-        
+        if($author_id!= '') {
+            $this->where('e.author', $author_id);
+        }
+        $this->where('is_active', !$show_inactive);
+        $this->where('trashed', $show_trashed);
+        if($entry_id != '') {
+            $this->where('entry_id', $entry_id); 
+        }
+        $comments = $this->get_many_by(
+                array(
+                    'default_comments.parent_id' => 0
+                )
+        );
         return $comments;
+    }
+    
+    public function post_awaiting_approval($entry_id = null, $author_id = null)
+    {
+        return $this->get_comment_by_event($entry_id, $author_id, 0, true, false);
+        
+    }
+    
+    public function get_active_comments()
+    {
+        $this->where(array('is_active' => true, 'trashed' => false));
+        return $this;
     }
     
     public function get_comment_details($comment_id)
@@ -415,5 +440,47 @@ class Comment_m extends MY_Model
                 ->from('comments as c')
                 ->join('events as e', 'e.id = c.entry_id', 'left')
                 ->get_by(array('c.id' => $comment_id)); 
+    }
+    
+    /**
+     * to check if the comment is allowed  by the creator.
+     * @param type $slug
+     * @return \stdClass
+     */
+    public function is_comment_allowed($event)
+    {
+        $this->load->model('profile/auto_approval_m');
+        $auto_approved = (bool) $this->auto_approval_m->count_by(array(
+            'admin_id' => $event->author,
+            'user_id' => $this->current_user->id,
+            'approval_type' => 'comment',
+            'status' => 'on'
+            )
+        );
+        
+        $this->db->set_dbprefix('default_');
+        $this->load->model('comments/comment_blacklists_m');
+        $response->blacklisted   = $this->comment_blacklists_m->is_blacklisted($event->author, $this->current_user->id);
+        $response = new stdClass(); 
+        $response->allow_comment = false; 
+        $response->message = null;
+        //allow comment if user is admin
+        if($this->current_user->group == 'admin' or $this->current_user->id == $event->author or $auto_approved){
+            $response->allow_comment = true;
+        } else {
+            if($response->blacklisted) {
+              $response->blacklisted = $blacklisted;
+              $response->message = 'You have been blocked by the creator of event <b class="txt-up">' . $event->title. '</b>';
+            } elseif(!$this->trend_m->am_i_following($event->id)){
+                $response->message = 'Follow the event <b class="txt-up">'. $event->title. '</b> to get updates, post and comment';
+            } else {
+                $response->allow_comment = true;
+            }
+            if($event->post_permission=='CREATER'){
+                $response->message = '';
+                $response->allow_comment = false; 
+            }
+        }
+        return $response; 
     }
 }

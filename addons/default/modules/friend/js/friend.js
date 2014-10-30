@@ -36,22 +36,7 @@ var friend = {
 
         }, 'json');
     }, 
-    checkPendingNotificationsCount: function(){
-        var otherCount = 0;
-        $.post('/profile/notifications/pending', {}, function(response) {
-            $.each(response.notifications, function(key, value){
-                if(value.type === 'message'){
-                       $('.message-notification-count').removeClass('d-none').text(value.count);
-                   }else if(value.type=== 'friend'){
-                       $('.friend-notification-count').removeClass('d-none').text(value.count);
-                   }else{
-                       otherCount+=parseInt(value.count);
-                       $('.other-notification-count').removeClass('d-none').text(otherCount);
-                   }
-            });
-
-        }, 'json');
-    }, 
+    
     follow: function(user_id){
         $.post('/profile/followers/create', {user: user_id}, function(response) {
             if (response.status === 'success') {
@@ -103,6 +88,3 @@ var friend = {
     
     
 };
-
-    friend.checkPendingNotificationsCount();
-    setInterval(function(){friend.checkPendingNotificationsCount();},10000);

@@ -21,19 +21,17 @@
 <?php 
 $profile = array('profile_pic','first_name', 'last_name');
 $bio= array('dob','gender', 'lang', 'bio');
-$address = array('phone', 'mobile', 'address_line1', 'address_line2', 'address_line3', 'postcode');
+$address = array('website', 'phone', 'mobile', 'address_line1', 'address_line2', 'address_line3', 'postcode');
 $profileFields = array();
 foreach($profile_fields as $pf):
     if(in_array($pf['field_slug'],$profile)):
         $profileFields[] = $pf;
-    endif;
-    
-    if(in_array($pf['field_slug'],$bio)):
+    elseif(in_array($pf['field_slug'],$bio)):
         $bioFields[] = $pf;
-    endif;
-    
-    if(in_array($pf['field_slug'],$address)):
+    elseif(in_array($pf['field_slug'],$address)):
         $addressFields[] = $pf;
+    else:
+        $profileFields[] = $pf;
     endif;
     
 endforeach;

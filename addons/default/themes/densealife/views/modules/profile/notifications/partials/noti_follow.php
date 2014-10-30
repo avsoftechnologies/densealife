@@ -5,7 +5,9 @@
 </span>
 <span class="center-text">
     <span class="fl">
-        <strong>{{data:sender}}</strong> {{ helper:lang line="profile:started_following" }}
+        <strong>{{data:sender}}</strong>
+        {{ helper:lang line="profile:started_following" }}
+        <br/>
+        <span class="time-log">{{generic:time_ago datetime='{{data:created_on}}'}}</span>
     </span>
 </span>
-<span class="time-log">{{generic:time_ago datetime='{{data:created_on}}'}}</span>

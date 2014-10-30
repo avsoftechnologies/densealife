@@ -34,10 +34,12 @@
                         </span>
                     <?php endif;?>
                     <span class="follower-right"><a href="#">{{profile:count_followers user_id =_user:id}} Follower(s)</a></span>
+                    {{if _user:bio}}
                     <div class="comman-box">
                         <span class="heading-comman">About Me</span>
                         <p>{{_user:bio}}</p>
                     </div>
+                    {{endif}}
                     {{ if user:logged_in_user !== _user:id}}
                      <div class="clearfix">
                          {{button:follow user_id=_user:id}}
@@ -59,12 +61,31 @@
                 <div class="right-bodyinnre-container">
                     <div class="comman-box">
                         <span class="heading-comman">Information</span>
+                        
                         {{user:profile user_id=_user:id}}
-                        <p>From: {{address_line1}},{{address_line2}}, {{address_line3}}</p>
-<!--                        <p>Works: Employer Name, 2014</p>
-                        <p>School: School Name, 2014</p>
-                        <p>RelationShip: Unmarrid</p>-->
-                        <p>Born: {{ helper:date format="F,dS Y" timestamp=dob }}</p>
+                        
+                        {{if address_line1 or address_line2 or address_line3}} 
+                        <p>From: 
+                            {{if address_line1}} 
+                                {{address_line1}} , 
+                            {{endif}} 
+                            {{if address_line2}}
+                                {{address_line2}},
+                            {{endif}}
+                            {{if address_line3}}
+                                {{address_line3}}
+                            {{endif}}
+                        </p>
+                        {{endif}}
+                        {{if work}}
+                            <p>Works: {{work}}</p>
+                        {{endif}}
+                        {{if relationship}}
+                            <p>RelationShip: {{relationship:value}}</p>
+                        {{endif}}
+                        {{if dob}}
+                            <p>Born: {{ helper:date format="F,dS Y" timestamp=dob }}</p>
+                        {{endif}}
                         {{/user:profile}}
                     </div>
                     {{profile:right_side_bar_blocks user_id=_user:id type='event'}}

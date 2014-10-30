@@ -13,6 +13,7 @@ class Notify
     CONST TYPE_INVITE  = 'invite';
     CONST TYPE_SHARE   = 'share';
     CONST TYPE_COMMENT = 'comment';
+    CONST TYPE_STAR = 'star';
     
     public static function trigger($type, $data)
     {
@@ -20,7 +21,6 @@ class Notify
         $insert['rec_id'] = $data['rec_id'];
         $insert['type']= $type;
         $insert['data'] = serialize($data);
-        
         try{
             ci()->notification_m->insert($insert);
         }catch(Exception $e){

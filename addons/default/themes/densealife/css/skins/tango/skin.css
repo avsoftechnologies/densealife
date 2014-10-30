@@ -45,7 +45,7 @@ ul#mycarousel li{
 }
 
 .jcarousel-skin-tango .jcarousel-item {
-    width: 170px;
+    width: 150px;
     height:150px;
 	margin:10px;
 }
@@ -89,8 +89,8 @@ ul#mycarousel li{
     width: 32px;
     height: 32px;
     cursor: pointer;
-    background: transparent url(next-horizontal.png) no-repeat 0 0;
-}
+    background: url(next-horizontal.png) no-repeat 0 0 #ffffff;
+}	
 
 .jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-next-horizontal {
     left: 5px;
@@ -100,7 +100,11 @@ ul#mycarousel li{
 
 .jcarousel-skin-tango .jcarousel-next-horizontal:hover,
 .jcarousel-skin-tango .jcarousel-next-horizontal:focus {
-    background-position: -32px 0;
+    background-position: -1px 0;
+	width: 50px;
+    height: 50px;
+	background-size:50px 50px;
+	border:1px solid #999999;
 }
 
 .jcarousel-skin-tango .jcarousel-next-horizontal:active {
@@ -122,7 +126,7 @@ ul#mycarousel li{
     width: 32px;
     height: 32px;
     cursor: pointer;
-    background: transparent url(prev-horizontal.png) no-repeat 0 0;
+    background: url(prev-horizontal.png) no-repeat 0 0 #ffffff;
 }
 
 .jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-prev-horizontal {
@@ -133,7 +137,11 @@ ul#mycarousel li{
 
 .jcarousel-skin-tango .jcarousel-prev-horizontal:hover, 
 .jcarousel-skin-tango .jcarousel-prev-horizontal:focus {
-    background-position: -32px 0;
+    background-position: -1px 0;
+	width: 50px;
+    height: 50px;
+	background-size:50px 50px;
+	border:1px solid #999999;
 }
 
 .jcarousel-skin-tango .jcarousel-prev-horizontal:active {

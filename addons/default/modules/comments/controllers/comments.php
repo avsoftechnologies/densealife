@@ -149,13 +149,14 @@ class Comments extends Public_Controller
             } else {
                 // Save the comment
                 if ($comment_id = $this->comment_m->insert($comment)) {
+                    $show_post = true;
                     if (!$auto_approved and $event->comment_approval == 'YES') {
+                        $show_post = false;
                         Notify::trigger(Notify::TYPE_COMMENT, array(
                             'rec_id' => $event->author,
                             'data'   => array(
                                 'comment_id' => $comment_id,
-                                'media'   => $comment['media'],
-                                'comment' => $comment['comment']
+                                'comment' => $comment,
                             )
                         ));
                     }
@@ -210,6 +211,7 @@ class Comments extends Public_Controller
                         $this->load->library('trends/trends');
 
                         $response['link_star'] = $this->trends->link_star($comment_id, 'comment');
+                        $response['show_post'] = $show_post;
                         echo json_encode($response);
                         exit;
                     }
@@ -559,17 +561,18 @@ class Comments extends Public_Controller
                    }
                    if ($action == 'approve')
                    {
-                           // add an event so third-party devs can hook on
-                           Events::trigger('comment_approved', $this->comment_m->get($id));
+                       $status = 'success'; 
+                       $message = 'Post approved';
                    }
-                   else
+                   elseif($action == 'decline')
                    {
-                           Events::trigger('comment_unapproved', $id);
+                           $status = 'success';
+                           $message = 'Post delcined';
                    }
            }
            
            $this->template
-                   ->build_json(array($status => lang('comments:' . $action . '_' . $status . $multiple)));
+                   ->build_json(array('status' => $status, 'message' => $message));
    }
    
    public function block()
@@ -625,4 +628,5 @@ class Comments extends Public_Controller
        $this->template
                ->build_json(array('html' => $html, 'offset' => (($offset+1) + $limit), 'remaining' => $remaining ));
    }
+   
 }

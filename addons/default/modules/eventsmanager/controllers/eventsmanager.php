@@ -46,6 +46,7 @@ class EventsManager extends Public_Controller
         $this->lang->load('blog');
         Asset::add_path('users', 'system/cms/modules/users/');
         $this->template->append_js('users::album.js');
+        $this->load->model('comments/comment_m');
     }
 
     private function _set_template_content($slug = null)
@@ -459,37 +460,12 @@ class EventsManager extends Public_Controller
     {
         $this->_set_template_content($slug);
         $event         = $this->eventsmanager_m->getBy('slug', $slug);
-        $this->load->model('profile/auto_approval_m');
-        $auto_approved = (bool) $this->auto_approval_m->count_by(array('admin_id' => $event->author, 'user_id' => $this->current_user->id, 'approval_type' => 'comment', 'status' => 'on'));
-        $this->db->set_dbprefix('default_');
-        $this->load->model('comments/comment_blacklists_m');
-        $blacklisted   = $this->comment_blacklists_m->is_blacklisted($event->author, $this->current_user->id);
-        $allow_comment = false;
-        $message = null;
-        //allow comment if user is admin
-        if($this->current_user->group == 'admin' or $this->current_user->id == $event->author or $auto_approved){
-            $allow_comment = true;
-        } else {
-            if($blacklisted) {
-              $message = 'You have been blocked by the creator of event <b class="txt-up">' . $event->title. '</b>';
-            } elseif(!$this->trend_m->am_i_following($event->id)){
-                $message = 'Follow the event <b class="txt-up">'. $event->title. '</b> to get updates, post and comment';
-            } else {
-                $allow_comment = true;
-            }
-            
-            if($event->post_permission=='CREATER'){
-                $message = '';
-                $allow_comment = false; 
-            }
-        }
-       
-        
+        $response = $this->comment_m->is_comment_allowed($event);
         $this->template
                 ->set('event', $event)
-                ->set('allow_comment', $allow_comment)
-                ->set('blacklisted', $blacklisted)
-                ->set('message', $message)
+                ->set('allow_comment', $response->allow_comment)
+                ->set('blacklisted', $response->blacklisted)
+                ->set('message', $response->message)
                 ->build('eventsmanager/wall');
 
     }
@@ -740,4 +716,24 @@ class EventsManager extends Public_Controller
                 ->build('invite_by_mail');
     }
 
+   public function pending_approval($slug, $show_all = false)
+   {
+       if($show_all) {
+           $event_id = null;
+       }else {
+           $event = $this->eventsmanager_m->get_by('slug', $slug);
+           $event_id = $event->id;
+       }
+       $post_pending_approval = $this->comment_m->post_awaiting_approval($event_id, $this->current_user->id);
+      
+       $this->template
+                ->set_layout(false)
+                ->set('posts', $post_pending_approval)
+                ->build('pending_approval');
+   }
+   
+   public function pending_approval_all()
+   {
+       $this->pending_approval(null, true);
+   }
 }

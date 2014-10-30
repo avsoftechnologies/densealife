@@ -337,9 +337,9 @@ ul.modify-block li a img{width:95px; height:95px;}
 ul.notification li{ width:96%; margin:1px; clear:both;padding:1%; height:auto; float:left;}
 ul.notification li:hover{ background-color:#f7f7f7; }
 ul.notification li span.img-left{float:left;}
-ul.notification li span.center-text{margin:2%; float:left;}
+ul.notification li span.center-text{margin-left:12px; margin-top:-3px; float:left;}
 ul.notification li span.img-right{float:right;}
-ul.notification li span.time-log{display:block; clear:both; text-align:left; color:#CCCCCC; margin-left:60px;}
+ul.notification li span.time-log{display:block; clear:both; text-align:left; color:#CCCCCC;}
 .notification-block p{font-size:11px; color:#0099FF;}
 span.notification-call{width:20px; background-color:orange; color:#FFFFFF; height:20px; position:absolute;z-index: 1;left: 55%;border-radius:10px;text-align:center; line-height:20px;top: 25%;}
 ul.notification li a img{width:45px; height:45px; border:#333333 !important;}
@@ -378,3 +378,10 @@ header .top-scrip .my-account-li ul{margin:0 auto; float:left; padding:0;}
 header .top-scrip .my-account-li ul li{ height:40px; text-align: left; padding-left:20px; line-height:40px; float:none; margin:0 auto; width:240px; border-bottom:1px solid #999999;}
 a.star-active{background-image:url(../img/new-star.png); background-repeat:no-repeat; background-position:left -25px; padding-left:26px;width:30px; }
 a.star-inactive{background-image:url(../img/new-star.png); background-repeat:no-repeat; background-position:left -2px; padding-left:26px;width:30px;}
+.homepage-bodyinnre-container ul.jcarousel-skin-tango li.jcarousel-item-horizontal li{margin-left:10px;}
+.homepage-bodyinnre-container .comman-box .jcarousel-skin-tango ul.jcarousel-list-horizontal li.jcarousel-item {margin-right:40px;font-weight:700;}
+.homepage-bodyinnre-container div.jcarousel-skin-tango .jcarousel-next-horizontal{right: -79px;}
+.homepage-bodyinnre-container div.jcarousel-skin-tango .jcarousel-clip-horizontal{width: 772px;}
+.homepage-bodyinnre-container div.jcarousel-skin-tango .jcarousel-container-horizontal{width: 695px;}
+.homepage-bodyinnre-container .jcarousel-skin-tango{margin:20px 20px 0px -30px;}
+jcarousel-clip jcarousel-clip-horizontal{}

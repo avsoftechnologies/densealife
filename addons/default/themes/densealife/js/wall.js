@@ -94,6 +94,9 @@ $('.form-status').ajaxForm({
     commentForm: function(response) {
         return '<form accept-charset="utf-8" method="post" class="form-status" action="' + this.url + '"><input type="hidden" value="' + response.entry + '" name="entry"><input type="hidden" value="' + response.comment_id + '" name="parent_id"><textarea class="form-post-comment " name="comment" rows="" cols="" onfocus="this.value =\'\'"></textarea></form>';
     },
+    approvalPending: function(){
+        return '<div>Your post submitted successfully and will be visible after admin approval. </div>';
+    },
     media: function(response) {
         if (response.media != '') {
             return '<a class="fancybox-effects-b pl10" data-fancybox-group="button" href="' + response.media.baseurl + 'files/large/' + response.media.filename + '"><img src="' + response.media.baseurl + 'files/wall/' + response.media.id + '" alt=""/></a>';
@@ -111,7 +114,11 @@ $('.form-status').ajaxForm({
         $('.status-box-media').hide().remove();
         $('.main-comment').val('');
         if (response.parent_id === 0) {
-            content = '<div class="container"><div class="header"><div class="profile_pic">' + response.pic_creator + '</div><div class="post_title"><span class="display_name">' + response.user_name + '</span><br/><span class="time time-ago">' + response.time_ago + '</span></div></div><div class="comments">' + this.media(response) + '<span class="clear"></span><span class="fl">' + response.comment + '</span><span class="clear">&nbsp;</span><span class="comman-star stars">' + response.link_star + '</span><span><a href="/comments/share/' + response.comment_id + '" class="fancybox fancybox.ajax">Share</a></span></div><div class="comment-box"><ul><li><span>' + response.pic + '</span> <div class="status-aera children">' + this.commentForm(response) + '</div></li></ul></div></div><span class="seperator">&nbsp;</span>';
+            if(response.show_post){
+                content = '<div class="container"><div class="header"><div class="profile_pic">' + response.pic_creator + '</div><div class="post_title"><span class="display_name">' + response.user_name + '</span><br/><span class="time time-ago">' + response.time_ago + '</span></div></div><div class="comments">' + this.media(response) + '<span class="clear"></span><span class="fl">' + response.comment + '</span><span class="clear">&nbsp;</span><span class="comman-star stars">' + response.link_star + '</span><span><a href="/comments/share/' + response.comment_id + '" class="fancybox fancybox.ajax">Share</a></span></div><div class="comment-box"><ul><li><span>' + response.pic + '</span> <div class="status-aera children">' + this.commentForm(response) + '</div></li></ul></div></div><span class="seperator">&nbsp;</span>';
+            }else{
+                content = '<div class="container color-blue">' + this.approvalPending() + '</div><span class="seperator">&nbsp;</span>';
+            }
             if ($('.status-blog ul').siblings().length > 0) {
                 $('.status-blog li:first').before('<li class="li-' + response.comment_id + '">' + content + '</li>');
             } else {

@@ -423,7 +423,7 @@ class Plugin_User extends Plugin
                     $x   = current($pic_info);
                     $pic = '<a href="/user/' . $username . '">' . img(array('src' => 'files/thumb/' . $x['id'] . '/' . $width . '/' . $height . '/' . $mode)) . '</a>';
                 } else {
-                    $pic = img(array('src' => '/assets/images/no-profile-pic.png', 'width' => $width, 'height' => $height));
+                    $pic = '<a href="/user/' . $username . '">' . img(array('src' => '/assets/images/no-profile-pic.png', 'width' => $width, 'height' => $height)). '</a>';
                 }
             }
         } else {
@@ -432,7 +432,7 @@ class Plugin_User extends Plugin
                 $x   = current($pic_info);
                 $pic = '<a href="/user/' . $username . '">' . img(array('src' => 'files/thumb/' . $x['id'] . '/' . $width . '/' . $height . '/' . $mode)) . '</a>';
             } else {
-                $pic = img(array('src' => '/assets/images/no-profile-pic.png', 'width' => $width, 'height' => $height));
+                $pic = '<a href="/user/' . $username . '">' . img(array('src' => '/assets/images/no-profile-pic.png', 'width' => $width, 'height' => $height)). '</a>';
             }
         }
         return $pic;

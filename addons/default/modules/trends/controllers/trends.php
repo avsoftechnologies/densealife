@@ -19,7 +19,7 @@ class Trends extends Public_Controller
     public function __construct()
     {
         parent::__construct() ;
-        $this->load->model('trend_m') ;
+        $this->load->model(array('trend_m', 'comments/comment_m')) ;
         $this->lang->load('trends') ;
         $this->load->helper('functions');
         if ( !is_logged_in() ) {
@@ -42,11 +42,30 @@ class Trends extends Public_Controller
             $reload = empty($decrypt['reload']) ? 'false' : 'true';
             // Save the trend
             if ( $trendIncrement = $this->trend_m->insert($decrypt) ) {
-                echo json_encode(array( 'message' => 'success',
-                    'action' => $trendIncrement,
-                    'entry' => $decrypt['entry_id'],
-                    'trend' => $decrypt['trend'],
-                    'reload' => $reload));
+                echo json_encode(
+                        array(
+                            'message' => 'success',
+                            'action'  => $trendIncrement,
+                            'entry'   => $decrypt['entry_id'],
+                            'trend'   => $decrypt['trend'],
+                            'reload'  => $reload
+                        )
+                    );
+                
+                    switch ($decrypt['trend']) {
+                    case 3:
+                        if ($trendIncrement == '+1') {
+                            $entry_details = $this->comment_m->get_by('id', $decrypt['entry_id']);
+                            Notify::trigger(Notify::TYPE_STAR, array(
+                                'rec_id' => $entry_details->user_id,
+                                'data'   => array(
+                                    'comment_id' => $entry_details->id,
+                                    'comment'    => $entry_details,
+                                )
+                            ));
+                        }
+                        break;
+                }
                 exit;
             } else {
                 echo json_encode(array( 'message' => 'failure' ));
