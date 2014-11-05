@@ -277,14 +277,15 @@ ul.comman-links li a:hover{color:#ffffff;text-decoration:none;}
 ul.friends-follow{float:left; width:100%;}
 ul.friends-follow li{float:left; margin:1px;}
 ul.friends-follow li img{width:50px; height:50px;background-color:#CCCCCC;margin:0px auto}
-comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}		279	.comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}
-button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}		280	button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}
-span.comman-star{width: auto;height: 18px;padding-left: 16px;line-height: 25px;background-position: 0px 0px;border:none;}	
-span.comman-star{width: auto;height: 26px;padding-left: 16px;line-height: 25px;background-position: -78px -86px;border:none;}
+.comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}
+.comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}
+button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}
+button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}
+span.comman-star{width: auto;height: 18px;padding-left: 4px;line-height: 25px;background-position: 0px 0px;border:none;}	
 .starbg{background:url(../img/star-button.png);background-repeat:no-repeat; background-position: 1px 9px; padding-left:24px !important;}
 .active-star{background: transparent url(../img/active-star.png) no-repeat 0 0; padding-left:20px;min-height: 10px;}
 .inactive-star{background: transparent url(../img/inactive-star.png) no-repeat 0 0; padding-left:20px;min-height: 10px;}
-span.comman-star a{margin: 0 10px;}
+span.comman-star a{margin: -1px 0 0px -16px;width: 17px;}
 span.heading-comman{padding:10px; text-transform:uppercase;color:#236aa0;font-size: 16px;line-height: 30px;}
 .left-bodyinnre-container{width:20%; float:left;}
 .center-bodyinnre-container{width:58%; float:left;margin:0px 1%;}
@@ -340,7 +341,7 @@ ul.modify-block li a img{width:95px; height:95px;}
 ul.notification li{ width:96%; margin:1px; clear:both;padding:1%; height:auto; float:left;}
 ul.notification li:hover{ background-color:#f7f7f7; }
 ul.notification li span.img-left{float:left;}
-ul.notification li span.center-text{margin-left:12px; margin-top:2%; float:left;}
+ul.notification li span.center-text{margin:2%; float:left;}
 ul.notification li span.img-right{float:right;}
 ul.notification li span.time-log{display:block; clear:both; text-align:left; color:#CCCCCC;margin-left:60px;}
 .notification-block p{font-size:11px; color:#0099FF;}
@@ -362,7 +363,7 @@ table tr td .btn-color{width:46%;margin-left: 9px;}
 table tr td h3{margin: 0;padding: 0;font-size: 21px; color:#05a6cc;}
 table tr th{color:#ffffff;}
 
-.homepage-bodyinnre-container{width:98%; float:left;margin:0px 1%;}
+.homepage-bodyinnre-container{width:78%; float:left;margin:0px 1%;}
 //.right-bodyinnre-container button{margin: -36px 0;width: 100%;height: 38px;font-size: 14px;font-weight: 700;}
 .cat{text-align:center; padding:0 0 2px 0;margin-top: -7px; }
 button.facebook-login{ background-image: url("../img/social-sprite.png"); background-position: 0 0; background-repeat: no-repeat;  height: 40px;
@@ -387,4 +388,3 @@ a.star-inactive{background-image:url(../img/new-star.png); background-repeat:no-
 .homepage-bodyinnre-container div.jcarousel-skin-tango .jcarousel-clip-horizontal{width: 772px;}
 .homepage-bodyinnre-container div.jcarousel-skin-tango .jcarousel-container-horizontal{width: 695px;}
 .homepage-bodyinnre-container .jcarousel-skin-tango{margin:20px 20px 0px -30px;}
-jcarousel-clip jcarousel-clip-horizontal{}
