@@ -45,7 +45,7 @@ textarea{  border: 1px solid #d8d8d8;
 .display-none, #upcoming, #favorites{display:none;}
 div.heading{padding:0 4px; text-transform:uppercase;color:#236aa0;font-size: 20px;}
 .hover-aera{top: 115px;position: absolute;z-index: 2;height: 30px;width: 90%;margin: 10px 3% 15px;line-height: 30px; padding:2%;}
-.star-aera{height:25px; width:auto; padding:2px 5%;background-image:url(../img/star-button.png); background-repeat:no-repeat; background-position:center;text-indent:-999px;}
+.star-aera{height: 14px; width:auto; padding:2px 5%;background-image:url(../img/active-star.png); background-repeat:no-repeat; background-position:0 1px;text-indent:-999px;}
 
 .display-none button{width:auto;margin: 0px;height: 25px;padding: 0 10px;}
 ul.status-blog li span.big-image img, .block-pages img{width:350px; height:200px;}
@@ -141,7 +141,7 @@ ul li.edit-pro span a{font-weight:normal;}
 .logo-densea-life:hover{opacity: 0.8;}
 .social-user-profile ul li{float:left; margin:1%; width:46%;}
 span.follower{width:54%;display:inline-block;margin:1px;float:left;border:1px solid #757575;font-size:11px;}
-span.stars {width:27%;display:inline-block;margin:1px;float:left;border:1px solid #757575;font-size:11px;background-image:url(../img/star.png); background-repeat:no-repeat;background-position: 177% -88px}
+span.stars {width:27%;display:inline-block;margin:1px;float:left;border:1px solid #757575;font-size:11px;background-image:url(../img/active-star.png); background-repeat:no-repeat;background-position: 177% -88px}
 /*span.stars:hover{background-position: 177% -110px;}*/
 a.new-star{background-image:url(../img/new-star.png); background-repeat:no-repeat; background-position:left -25px; padding-left:26px;width:30px;}
 a.new-star:hover{background-position: left 0px;background-size: 9%;}
@@ -165,6 +165,7 @@ span.follower a, span.stars a{font-size:11px;text-decoration:none;color:#236aa0;
 #body-container .right-body-container .login-form-block span{font-size:11px;text-decoration:underline;}
 #body-container .right-body-container .login-form-block span.key-icon{display:block;background:url(../img/key-icon.png);background-repeat:no-repeat; background-position:97% 12px; padding:10px;text-indent:-999px;overflow: hidden;}
 #body-container .right-body-container .login-form-block input[type=text],  input[type=password]{width:91%;margin:2%;border:1px solid #d8d8d8;line-height:25px; height:25px;padding:2%;-webkit-box-shadow:inset 0 0 20px 5px #eae6e6;box-shadow:inset 0 0 20px 5px #eae6e6;}
+.login-form-block input[type=password]{width:91%;}
 .activity-feeds{border:1px solid #d8d8d8;height:auto;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 15px auto;}
 .activity-feeds span.heading{padding:10px; text-transform:uppercase;color:#236aa0;font-size: 16px;}
 .activity-feeds ul{width:100%;float:left;margin:0px; padding:0px;}
@@ -178,7 +179,7 @@ span.name a{font-size:10px;}
 .activity-feeds ul li span img{width:50px; height:50px;background-color:#CCCCCC;margin:10px auto; float:left;}
 footer{width: 96%;margin: 20px auto;border:1px solid #d8d8d8;padding: 2% 2% 3%;background-color:#ffffff;float:left;}
 footer span{display:inline-block; float:left;}
-footer span.bottom-links{float:right;}
+footer span.bottom-links, .bottom-links{float:right;}
 footer ul li{float:left; list-style-type: none; padding:0 10px; border-right: 1px solid #999999;}
 /*Sign-up Form*/
 #backgroundPopup { 	z-index:1;position: fixed;display:none;height:100%;width:100%;background:#000000;top:0px;left:0px;}
@@ -276,11 +277,13 @@ ul.comman-links li a:hover{color:#ffffff;text-decoration:none;}
 ul.friends-follow{float:left; width:100%;}
 ul.friends-follow li{float:left; margin:1px;}
 ul.friends-follow li img{width:50px; height:50px;background-color:#CCCCCC;margin:0px auto}
-.comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}
-button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}
+comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}		279	.comman-box{border:1px solid #d8d8d8;width:96%; padding:2%;background:url(../img/activity-icon.png);background-repeat:no-repeat; background-position: -1px 0px;margin: 10px auto;}
+button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}		280	button.common{width: 104px;float: left;margin: 10px 3px;padding: 7px 10px;text-align: center;border: 1px solid #d8d8d8;color: #ffffff;cursor: pointer;}
+span.comman-star{width: auto;height: 18px;padding-left: 16px;line-height: 25px;background-position: 0px 0px;border:none;}	
 span.comman-star{width: auto;height: 26px;padding-left: 16px;line-height: 25px;background-position: -78px -86px;border:none;}
 .starbg{background:url(../img/star-button.png);background-repeat:no-repeat; background-position: 1px 9px; padding-left:24px !important;}
-span.comman-star:hover{background-position: -80px -174px;}
+.active-star{background: transparent url(../img/active-star.png) no-repeat 0 0; padding-left:20px;min-height: 10px;}
+.inactive-star{background: transparent url(../img/inactive-star.png) no-repeat 0 0; padding-left:20px;min-height: 10px;}
 span.comman-star a{margin: 0 10px;}
 span.heading-comman{padding:10px; text-transform:uppercase;color:#236aa0;font-size: 16px;line-height: 30px;}
 .left-bodyinnre-container{width:20%; float:left;}
@@ -337,11 +340,11 @@ ul.modify-block li a img{width:95px; height:95px;}
 ul.notification li{ width:96%; margin:1px; clear:both;padding:1%; height:auto; float:left;}
 ul.notification li:hover{ background-color:#f7f7f7; }
 ul.notification li span.img-left{float:left;}
-ul.notification li span.center-text{margin-left:12px; margin-top:-3px; float:left;}
+ul.notification li span.center-text{margin-left:12px; margin-top:2%; float:left;}
 ul.notification li span.img-right{float:right;}
-ul.notification li span.time-log{display:block; clear:both; text-align:left; color:#CCCCCC;}
+ul.notification li span.time-log{display:block; clear:both; text-align:left; color:#CCCCCC;margin-left:60px;}
 .notification-block p{font-size:11px; color:#0099FF;}
-span.notification-call{width:20px; background-color:orange; color:#FFFFFF; height:20px; position:absolute;z-index: 1;left: 55%;border-radius:10px;text-align:center; line-height:20px;top: 25%;}
+span.notification-call{width:20px; background-color:#FF0000; color:#FFFFFF; height:20px; position:absolute;z-index: 1;left: 55%;border-radius:10px;text-align:center; line-height:20px;top: 25%;}
 ul.notification li a img{width:45px; height:45px; border:#333333 !important;}
 ul.modify-block li .hover-aera{position: absolute;z-index: 2;height: 30px;width: 30px;padding: 2%;background-color: #ffffff;right: 4px;bottom: 4px; margin:0px; top:auto; line-height:normal;}
 ul.modify-block li .hover-aera a.star-aera{width: 30px;padding: 0;text-indent: -9999px;}
